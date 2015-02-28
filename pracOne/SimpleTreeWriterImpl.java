@@ -54,7 +54,7 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 			//formula for spacing before first node
 			if (numOfNodes==firstNodeInLevel)
 			{
-				System.out.println();	
+				output.println();	
 				space= ((int)Math.pow(2,h-l)-1)/2;
 			}
 			else
@@ -90,11 +90,11 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 
 			if(curNode!=BinaryTreeNode.EMPTY_NODE)
 			{
-				System.out.print(spacetoprint+makeSameTextWidth(curNode.getItem(),maxWidth));
+				output.print(spacetoprint+makeSameTextWidth(curNode.getItem(),maxWidth));
 			}
 			else
 			{
-				System.out.print(spacetoprint+placeholderSpace);	
+				output.print(spacetoprint+placeholderSpace);	
 			}
 		}
 	}
