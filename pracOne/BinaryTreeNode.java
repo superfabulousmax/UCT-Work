@@ -16,6 +16,7 @@ public class BinaryTreeNode {
      */
     public static BinaryTreeNode EMPTY_NODE = new BinaryTreeNode();
     
+    
     private BinaryTreeNode() { this.left=null; this.item=null; this.right=null; }
     
     /**
