@@ -28,10 +28,13 @@ public class TreeMain{
          while (numbersOfLine2.hasNextInt() ){
             tree2.insert(numbersOfLine2.nextInt());
         }
-        System.out.print(tree1.similar(tree2));
+        System.out.println("Tree one:");
         SimpleBST.print(tree1, new SimpleTreeWriterImpl(System.out));
-        
-         SimpleBST.print(tree2, new SimpleTreeWriterImpl(System.out));
-
+        System.out.println("Tree two:");
+        SimpleBST.print(tree2, new SimpleTreeWriterImpl(System.out));
+        if(tree1.similar(tree2))
+            System.out.print("The trees are similar");
+        else
+            System.out.print("The trees are not similar");
 	}
 }
