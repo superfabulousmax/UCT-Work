@@ -4,7 +4,7 @@ public class TreeUtils{
 	/**
 	*Determine whether node is a place holder
 	*/
-	public boolean isPlaceHolder(BinaryTreeNode node) 
+	public static boolean isPlaceHolder(BinaryTreeNode node) 
 	{
 		return node == BinaryTreeNode.EMPTY_NODE;
 	}
@@ -37,10 +37,23 @@ public class TreeUtils{
 	/**
 	*Determine whether one tree node structure is similar (has the same structure) as another.
 	*/
-	// static boolean similar(BinaryTreeNode treeStructOne, BinaryTreeNode treeStructTwo) 
-	// {
+	static boolean similar(BinaryTreeNode treeStructOne, BinaryTreeNode treeStructTwo) 
+	{
+		if (isPlaceHolder(treeStructOne) || isPlaceHolder(treeStructTwo)) {
+			if (!isPlaceHolder(treeStructOne) || !isPlaceHolder(treeStructTwo)) return false;
+			else return true;
+		}
 
-	// }
+		if (treeStructOne.hasRight()) {
+			if (!treeStructTwo.hasRight()) return false;
+			if (!similar(treeStructOne.getRight(), treeStructTwo.getRight())) return false;
+		}
 
+		if (treeStructOne.hasLeft()) {
+			if (!treeStructTwo.hasLeft()) return false;
+			if (!similar(treeStructOne.getLeft(), treeStructTwo.getLeft())) return false;
+		}
 
+		return true;
+	}
 }
