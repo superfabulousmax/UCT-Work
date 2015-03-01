@@ -83,8 +83,8 @@ public class SimpleBST {
      * Determine whether this BST is similar to the other BST.
      */
     public boolean similar(SimpleBST other) {
-        // return TreeUtils.similar(this.getRoot(), other.getRoot());
-        return false;
+        return TreeUtils.similar(this.getRoot(), other.getRoot());
+        
     }
 
     /**

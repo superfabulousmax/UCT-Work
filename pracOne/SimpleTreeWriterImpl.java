@@ -1,5 +1,11 @@
 import java.util.ArrayDeque;
 import java.io.*;
+/**
+ * Simple binary tree node for integer values.
+ * 
+ * @author Sinead Urisohn
+ * @version 1/03/2015
+ */
 public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 	PrintStream output;
 

@@ -1,4 +1,10 @@
 import java.util.*;
+/**
+ * 	utility procedures for Binary tree structures.
+ * 
+ * @author Stephan Jamieson 
+ * @version 24/2/2015
+ */
 
 public class TreeUtils{
 	/**

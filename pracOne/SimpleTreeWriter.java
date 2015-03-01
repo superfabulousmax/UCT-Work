@@ -2,8 +2,8 @@ import java.io.PrintStream;
 /**
  * Abstract definition of an object for printing a simple binary tree structure. 
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Sinead (your name) 
+ * @version 1 March 2015 (a version number or a date)
  */
 public interface SimpleTreeWriter{
 
