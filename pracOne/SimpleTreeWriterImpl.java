@@ -36,7 +36,7 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 		int space=0;
 		
 		int maxWidth = (""+node.getLargest()).length();
-		String placeholderSpace="";
+		String placeholderSpace="";//spaces for empty nodes
 		// increment placeholder space
 			for(int i=1;i<=maxWidth;i++)
 			{
@@ -44,13 +44,13 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 			}
 
 		BinaryTreeNode placeholder = BinaryTreeNode.EMPTY_NODE;//if tree is incomplete
-		ArrayDeque q = new ArrayDeque();
+		ArrayDeque q = new ArrayDeque();// Create Binary tree node queue 
 		q.addLast(node);
 
 
 
 		while(q.size() > 0) {
-			BinaryTreeNode curNode = (BinaryTreeNode) q.removeFirst();
+			BinaryTreeNode curNode = (BinaryTreeNode) q.removeFirst();//current node
 
 			numOfNodes++;
 			int l=(int)(Math.log(numOfNodes)/Math.log(2));
@@ -60,7 +60,7 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 			//formula for spacing before first node
 			if (numOfNodes==firstNodeInLevel)
 			{
-				output.println();	
+				output.println();// print new line
 				space= ((int)Math.pow(2,h-l)-1)/2;
 			}
 			else
