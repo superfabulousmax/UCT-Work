@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.io.*;
 /**
 *Main class that does all the coordination of prints tree and tests similarity
 *@author
@@ -36,5 +37,14 @@ public class TreeMain{
             System.out.print("The trees are similar");
         else
             System.out.print("The trees are not similar");
-	}
+
+        //write trees to textfiles
+        try{
+        SimpleBST.print(tree1, new SimpleTreeWriterImpl(new PrintStream(new File("T1.out"))));
+        SimpleBST.print(tree2, new SimpleTreeWriterImpl(new PrintStream(new File("T2.out"))));
+        }catch(FileNotFoundException e)
+        {
+            System.out.println(e);
+        }
+    }
 }
