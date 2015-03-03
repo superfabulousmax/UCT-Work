@@ -19,21 +19,21 @@ public class TestTreeUtils{
 	private int [] array4 = {17,11,9,2,3,1};
 
 
-	private int [] array5 = {8,7,6,15,12,23);
+	private int [] array5 = {8,7,6,15,12,23};
 
-	private int [] array5 = {8,7,6,34,12,23);
+	private int [] array6 = {8,7,6,34,12,23};
 	SimpleBST tree1 = new  SimpleBST();
 	BinaryTreeNode placeholder = BinaryTreeNode.EMPTY_NODE;//if tree is incomplete
 
 
 	@test
-	public void testPlaceHolder{
+	public void testPlaceHolder(){
 		assertTrue(TreeUtils.isPlaceHolder(placeholder));
 	}
 
 
 	@Test
-	public void testSimilar{
+	public void testSimilar(){
 
 	}
 
