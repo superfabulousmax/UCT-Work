@@ -13,10 +13,10 @@ public class TreeMain{
         Scanner scanner = new Scanner(System.in).useDelimiter("\n");//use newline delimiter
         System.out.print("Enter a comma separated list of numbers for tree one: ");
         String line1=scanner.nextLine();
-        Scanner numbersOfLine1 = new Scanner(line1).useDelimiter(",");
+        Scanner numbersOfLine1 = new Scanner(line1).useDelimiter("\\s*,\\s*");
         System.out.print("Enter a comma separated list of numbers for tree two: ");
         String line2=scanner.nextLine();
-        Scanner numbersOfLine2 = new Scanner(line2).useDelimiter(",");
+        Scanner numbersOfLine2 = new Scanner(line2).useDelimiter("\\s*,\\s*");
         
         SimpleBST tree1 = new  SimpleBST();
         
