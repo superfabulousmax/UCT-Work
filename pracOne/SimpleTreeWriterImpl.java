@@ -1,13 +1,13 @@
 import java.util.LinkedList;
 import java.io.*;
 /**
- * Simple binary tree node for integer values.
+ * Implements binary tree node print stream
  * 
  * @author Sinead Urisohn
  * @version 1/03/2015
  */
 public class SimpleTreeWriterImpl implements SimpleTreeWriter{
-	PrintStream output;
+	PrintStream output;//print stream object
 
 	//default constructor
 	public SimpleTreeWriterImpl(PrintStream output)
@@ -62,8 +62,8 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 				if (numOfNodes-curNodeLevel.size()+m==firstNodeInLevel)//
 				{
 
-					// System.out.println("h j"+ h + " " + j + " " + "end");
-					space= ((int)Math.pow(2,h-j)-1)/2;
+					
+					space= ((int)Math.pow(2,h-j)-1)/2;//initial spaces
 				}
 				else
 				{
@@ -90,7 +90,7 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 				}
 			}
 			output.println();//new line
-			curNodeLevel=TreeUtils.nextLevel(curNodeLevel);
+			curNodeLevel=TreeUtils.nextLevel(curNodeLevel);//change levels
 		}
 	}
 	/**

@@ -9,6 +9,7 @@ import java.util.*;
 public class TreeUtils{
 	/**
 	*Determine whether node is a place holder
+	*@param BinaryTreeNode node
 	*/
 	public static boolean isPlaceHolder(BinaryTreeNode node) 
 	{
@@ -16,6 +17,7 @@ public class TreeUtils{
 	}
 	/**
 	*Obtain a list containing the root node of the given structure i.e.
+	*@param BinaryTreeNode node
 	*/
 	static LinkedList<BinaryTreeNode> levelZero(BinaryTreeNode tNode) 
 	{
@@ -25,8 +27,9 @@ public class TreeUtils{
 	}
 	/**
 	*Given a list of nodes, obtain the next level.
+	*@param LinkedList<BinaryTreeNode> level
 	*/
-	static LinkedList<BinaryTreeNode> nextLevel(List<BinaryTreeNode> level) 
+	static LinkedList<BinaryTreeNode> nextLevel(LinkedList<BinaryTreeNode> level) 
 	{
 		LinkedList<BinaryTreeNode> list = new LinkedList<BinaryTreeNode>();
 
@@ -42,19 +45,22 @@ public class TreeUtils{
 	}
 	/**
 	*Determine whether one tree node structure is similar (has the same structure) as another.
+	*@param BinaryTreeNode treeStructOne, BinaryTreeNode treeStructTwo
 	*/
 	static boolean similar(BinaryTreeNode treeStructOne, BinaryTreeNode treeStructTwo) 
 	{
+		//base case
 		if (isPlaceHolder(treeStructOne) || isPlaceHolder(treeStructTwo)) {
 			if (!isPlaceHolder(treeStructOne) || !isPlaceHolder(treeStructTwo)) return false;
 			else return true;
 		}
-
+		//check right
 		if (treeStructOne.hasRight()) {
 			if (!treeStructTwo.hasRight()) return false;
 			if (!similar(treeStructOne.getRight(), treeStructTwo.getRight())) return false;
 		}
 
+		//check left
 		if (treeStructOne.hasLeft()) {
 			if (!treeStructTwo.hasLeft()) return false;
 			if (!similar(treeStructOne.getLeft(), treeStructTwo.getLeft())) return false;
