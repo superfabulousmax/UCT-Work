@@ -17,7 +17,7 @@ public class TreeUtils{
 	/**
 	*Obtain a list containing the root node of the given structure i.e.
 	*/
-	static List<BinaryTreeNode> levelZero(BinaryTreeNode tNode) 
+	static LinkedList<BinaryTreeNode> levelZero(BinaryTreeNode tNode) 
 	{
 		LinkedList<BinaryTreeNode> list = new LinkedList<BinaryTreeNode>();
 		list.push(tNode);
@@ -26,16 +26,16 @@ public class TreeUtils{
 	/**
 	*Given a list of nodes, obtain the next level.
 	*/
-	static List<BinaryTreeNode> nextLevel(List<BinaryTreeNode> level) 
+	static LinkedList<BinaryTreeNode> nextLevel(List<BinaryTreeNode> level) 
 	{
 		LinkedList<BinaryTreeNode> list = new LinkedList<BinaryTreeNode>();
 
 		for (BinaryTreeNode node : level) {
-			if (node.hasLeft()) list.push(node.getLeft());
-			else list.push(BinaryTreeNode.EMPTY_NODE);
+			if (node.hasLeft()) list.add(node.getLeft());
+			else list.add(BinaryTreeNode.EMPTY_NODE);
 
-			if (node.hasRight()) list.push(node.getRight());
-			else list.push(BinaryTreeNode.EMPTY_NODE);
+			if (node.hasRight()) list.add(node.getRight());
+			else list.add(BinaryTreeNode.EMPTY_NODE);
 		}
 
 		return list;

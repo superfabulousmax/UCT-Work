@@ -1,4 +1,4 @@
-import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.io.*;
 /**
  * Simple binary tree node for integer values.
@@ -32,9 +32,11 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 	public void write(BinaryTreeNode node)
 	{
 		int h=node.getHeight();
+		BinaryTreeNode curNode;
 		int numOfNodes=0;
 		int space=0;
-		
+		int l=0;
+		int firstNodeInLevel=0;
 		int maxWidth = (""+node.getLargest()).length();
 		String placeholderSpace="";//spaces for empty nodes
 		// increment placeholder space
@@ -42,66 +44,53 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 			{
 				placeholderSpace+=" ";
 			}
+		LinkedList <BinaryTreeNode>curNodeLevel = TreeUtils.levelZero(node);//removes first LinkList level
+		for( int j =0;j<h;j++)//loop through levels
+		{
 
-		BinaryTreeNode placeholder = BinaryTreeNode.EMPTY_NODE;//if tree is incomplete
-		ArrayDeque q = new ArrayDeque();// Create Binary tree node queue 
-		q.addLast(node);
+			
 
+			numOfNodes+=curNodeLevel.size();
+			
+		 	firstNodeInLevel=(int)Math.pow(2,j)-1;
 
+		 	
+			for(int m=0; m<curNodeLevel.size();m++)
+		 	{
+		 		 curNode = (BinaryTreeNode) curNodeLevel.get(m);//current node
+			 		 //formula for spacing before first node
+				if (numOfNodes-curNodeLevel.size()+m==firstNodeInLevel)//
+				{
 
-		while(q.size() > 0) {
-			BinaryTreeNode curNode = (BinaryTreeNode) q.removeFirst();//current node
+					// System.out.println("h j"+ h + " " + j + " " + "end");
+					space= ((int)Math.pow(2,h-j)-1)/2;
+				}
+				else
+				{
+					space= ((int)Math.pow(2,h-j)-1);//spaces between nodes
+				}
+				
 
-			numOfNodes++;
-			int l=(int)(Math.log(numOfNodes)/Math.log(2));
-			if (l > h) break;
-			int firstNodeInLevel=(int)Math.pow(2,l);
+				String spacetoprint="";
+				// increment grid block size
+				for(int i=1;i<=space;i++)
+				{
+					spacetoprint+=placeholderSpace;//each grid block must have space sizes for largest digit
+				}
 
-			//formula for spacing before first node
-			if (numOfNodes==firstNodeInLevel)
-			{
-				output.println();// print new line
-				space= ((int)Math.pow(2,h-l)-1)/2;
+				if(!TreeUtils.isPlaceHolder(curNode))
+				{
+					output.print(spacetoprint+makeSameTextWidth(curNode.getItem(),maxWidth));
+
+				}
+				else
+				{
+					
+					output.print(spacetoprint+placeholderSpace);	
+				}
 			}
-			else
-			{
-				space= ((int)Math.pow(2,h-l)-1);
-			}
-
-			String spacetoprint="";
-			// increment grid block size
-			for(int i=1;i<=space;i++)
-			{
-				spacetoprint+=placeholderSpace;
-			}
-
-		
-			if(curNode.hasLeft())//if node is null
-			{
-				q.addLast(curNode.getLeft());
-			}
-			else
-			{
-				q.addLast(placeholder);
-			}
-
-			if(curNode.hasRight())
-			{
-				q.addLast(curNode.getRight());
-			}
-			else
-			{
-				q.addLast(placeholder);
-			}
-
-			if(curNode!=BinaryTreeNode.EMPTY_NODE)
-			{
-				output.print(spacetoprint+makeSameTextWidth(curNode.getItem(),maxWidth));
-			}
-			else
-			{
-				output.print(spacetoprint+placeholderSpace);	
-			}
+			output.println();//new line
+			curNodeLevel=TreeUtils.nextLevel(curNodeLevel);
 		}
 	}
 	/**
