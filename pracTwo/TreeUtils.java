@@ -47,9 +47,60 @@ public class TreeUtils {
 
     /**
      * Recursive implementation of insert on an AVLTreeNode structure.
+     *@param node- root node
+     *@param key
+     *@return a root node that may or may not be the one that was passed in.
      */
     public static AVLTreeNode insert(AVLTreeNode node, Integer key) {
         // Your code here
+        //if node is null
+        if(node==null)
+            node= new AVLTreeNode(key);
+        else if(key==node.getKey())
+            //do nothing
+        //else if key less than key at node
+        //insert left
+        else if(key<node.getKey())
+        {
+            node = insert(node.getLeft(),key);
+            //check for and repair imbalance
+
+        }
+        else
+        {
+            //key greater so insert right
+            node = insert(node.getRight(),key);
+            //check for imbalance and repair it
+
+        }
+
+        //recalculate the node's height
+        node.setHeight(heightOfAVL(node));//set node height to max of children+1
+        
+
+
+        return node;
+
+    }
+    /**
+     * Obtain the height of this tree structure.
+     *@param node
+     *@return height of max of children +1
+     */
+    public int heightOfAVL(AVLTreeNode node)
+    {
+        if (node.hasLeft() && node.hasRight()) {
+            return Math.max(node.getLeft().getHeight(), node.getRight().getHeight())+1;
+        }
+        else if (node.hasLeft()) {
+            return node.getLeft().getHeight()+1;
+        }
+        else if (node.hasRight()) {
+            return node.getRight().getHeight()+1;
+        }
+        else {
+            return 1;
+        }
     }
     
     /**
