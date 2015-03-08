@@ -24,9 +24,25 @@ public class TreeUtils {
 
     /** 
      * Determine whether the given tree structure contains the given key.
+     *@param key is the key to search for
+     *@param node is the node to match the key with
+     *@return boolean value corresponding to if node contains key
      */
     public static boolean contains(AVLTreeNode node, Integer key) {
         // Your code here.
+        while(node != null)
+        {
+            if(key.compareTo(node.getKey())<0)
+                node =node.getLeft();
+            else if(key.compareTo(node.getKey())>0)
+                node =node.getRight();
+            else //found
+                return true;
+
+        }
+        //else not found
+        return false;
+
     } 
 
     /**
