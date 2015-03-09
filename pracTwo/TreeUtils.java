@@ -67,7 +67,7 @@ public class TreeUtils {
             //check for and repair imbalance
             if(node.getBalanceFactor()==2)
             {
-                node = rotateWithLeftChild(node);
+                node = rebalanceLeft(node);
             }
             //else if(node.getBalanceFactor()<-1)
 
@@ -77,9 +77,9 @@ public class TreeUtils {
             //key greater so insert right
             node = insert(node.getRight(),key);
             //check for imbalance and repair it
-            if(Math.abs(node.getBalanceFactor())>1)
+            if(node.getBalanceFactor()==-2)
             {
-
+                node = rebalanceRight(node);
             }
 
         }
@@ -112,6 +112,36 @@ public class TreeUtils {
             return 1;
         }
     }
+
+    public static AVLTreeNode rebalanceLeft(AVLTreeNode node , Integer key)
+    {
+        if(key<node.getKey())
+        {
+            //case  1 applies
+            return rotateWithLeftChild(node);
+
+        }
+        else
+        {
+            //case 2 applies
+            return doubleRotateWithLeftChild(node);
+        }
+    }
+
+    public static AVLTreeNode rebalanceRight(AVLTreeNode node , Integer key)
+    {
+        if(key>node.getKey())
+        {
+            //case  4 applies
+            return rotateWithRightChild(node);
+
+        }
+        else
+        {
+            //case 3 applies
+            return doubleRotateWithRightChild(node);
+        }
+    }
     
     /**
      * Rotate binary tree node with left child.
@@ -120,6 +150,10 @@ public class TreeUtils {
     public static AVLTreeNode rotateWithLeftChild( AVLTreeNode k2 )
     {
         // Your code here
+        AVLTreeNode k1 = k2.getLeft();
+        k2.setLeft(k1.getRight());
+        k1.setRight(k2);
+        return k1;
     }
 
     /**
@@ -129,6 +163,10 @@ public class TreeUtils {
     public static AVLTreeNode rotateWithRightChild( AVLTreeNode k1 )
     {
         // Your code here
+        AVLTreeNode k2 = k1.getRight();
+        k1.setRight(k2.getLeft());
+        k2.setLeft(k1);
+        return k2;_
     }
 
     /**
@@ -139,6 +177,8 @@ public class TreeUtils {
     public static AVLTreeNode doubleRotateWithLeftChild( AVLTreeNode k3 )
     {
         // Your code here.
+        k3.setLeft(rotateWithRightChild(k3.getLeft()));
+        return rotateWithLeftChild(k3);
     }
 
     /**
@@ -149,6 +189,8 @@ public class TreeUtils {
     public static AVLTreeNode doubleRotateWithRightChild( AVLTreeNode k1 )
     {
         // Your code here.
+        k1.setRight(rotateWithLeftChild(k1.getRight()));
+        return rotateWithRightChild(k1);0
     }
 
     
