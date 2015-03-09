@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
 /**
  * Utility procedures for binary tree structures.
  * 
@@ -64,6 +65,11 @@ public class TreeUtils {
         {
             node = insert(node.getLeft(),key);
             //check for and repair imbalance
+            if(node.getBalanceFactor()==2)
+            {
+                node = rotateWithLeftChild(node);
+            }
+            //else if(node.getBalanceFactor()<-1)
 
         }
         else
@@ -71,6 +77,10 @@ public class TreeUtils {
             //key greater so insert right
             node = insert(node.getRight(),key);
             //check for imbalance and repair it
+            if(Math.abs(node.getBalanceFactor())>1)
+            {
+
+            }
 
         }
 
