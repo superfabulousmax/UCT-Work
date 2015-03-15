@@ -246,7 +246,7 @@ public class TreeUtils {
             else if(node.getBalanceFactor()==-2)
             {
             	
-            	return rebalanceRight(node,node.getKey());
+            	return rebalanceRightDelete(node);
             }
     		
     				
@@ -357,6 +357,31 @@ public class TreeUtils {
             //case  4 applies
         	System.out.println("hello right right");
         	System.out.println("key "+key+"node key "+node.getKey());
+            return rotateWithRightChild(node);
+
+        }
+        else
+        {
+            //case 3 applies
+        	System.out.println("hello doublerotatewithrightchild");
+            return doubleRotateWithRightChild(node);
+        }
+    }
+    /**
+     * Rebalance after delete based on subtree heights
+     * @param node
+     * @param key
+     * @return
+     */
+    public static AVLTreeNode rebalanceRightDelete(AVLTreeNode node)
+    {
+    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
+    	System.out.println("TREEEE: "+node);
+    	obj.write(node);
+        if(node.getRight().getHeight()>node.getLeft().getHeight())//key>node.getRight().getKey())
+        {
+            //case  4 applies
+        	
             return rotateWithRightChild(node);
 
         }
