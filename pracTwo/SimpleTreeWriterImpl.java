@@ -96,7 +96,7 @@ public class SimpleTreeWriterImpl implements SimpleTreeWriter{
 			}
 			output.println();//new line
 			curNodeLevel=TreeUtils.nextLevel(curNodeLevel);//change levels
-			//System.out.println(curNodeLevel);
+			
 		}
 	}
 	/**

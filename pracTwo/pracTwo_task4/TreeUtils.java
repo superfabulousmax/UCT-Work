@@ -200,7 +200,7 @@ public class TreeUtils {
 
         Integer key =AVLTree.calculateStringKey(value);
         //The key to delete does not exist
-        
+
         if(node.getGroupedLetters().size()>1)
         {
 
@@ -309,9 +309,6 @@ public class TreeUtils {
 
     public static AVLTreeNode rebalanceLeft(AVLTreeNode node , Integer key)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
-    	
-    	obj.write(node);
         if(key<node.getLeft().getKey())
         {
             //case  1 applies
@@ -329,9 +326,7 @@ public class TreeUtils {
     
     public static AVLTreeNode rebalanceLeftDelete(AVLTreeNode node)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
     	
-    	obj.write(node);
     	if(node.getRight()==null){return rotateWithLeftChild(node);}
         if(node.getLeft().getHeight()>node.getRight().getHeight())
         {
@@ -350,9 +345,9 @@ public class TreeUtils {
 
     public static AVLTreeNode rebalanceRight(AVLTreeNode node , Integer key)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
     	
-    	obj.write(node);
+    	
+    	
         if(key>node.getRight().getKey())
         {
             //case  4 applies
@@ -370,9 +365,9 @@ public class TreeUtils {
     
     public static AVLTreeNode rebalanceRightDelete(AVLTreeNode node)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
     	
-    	obj.write(node);
+    	
+    	
     	if(node.getLeft()==null){return rotateWithRightChild(node);}
         if(node.getRight().getHeight()>node.getLeft().getHeight())
         {

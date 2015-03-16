@@ -90,22 +90,22 @@ public class TreeUtils {
         {
         	if(node.hasLeft()){
         		node.setLeft(insert(node.getLeft(),key));
-        		System.out.println(key+" < "+node.getKey()+" left ");
+        		
         	}
         	else{
-        		System.out.println(key+" < "+node.getKey()+" left ");
-        		node.setLeft(new AVLTreeNode(key));
+        		
+                node.setLeft(new AVLTreeNode(key));
         	}
             //check for and repair imbalance
             if(node.getBalanceFactor()==2)
             {
-            	System.out.println("Wrong -2 bf");
+            	
                 return rebalanceLeft(node,key);
             }
             else if(node.getBalanceFactor()==-2)
             {
-            	System.out.println("Gotcha -2 bf");
-            	return rebalanceRight(node,key);
+            	
+                return rebalanceRight(node,key);
             }
             	//else if(node.getBalanceFactor()<-1)
 
@@ -116,12 +116,10 @@ public class TreeUtils {
             
             if(node.hasRight())
             {
-            	System.out.println(key+" > "+node.getKey()+" right ");
             	node.setRight(insert(node.getRight(),key));
             }
             else{
             	node.setRight(new AVLTreeNode(key));
-            	System.out.println(key+" > "+node.getKey()+" right ");
             	
             
             }
@@ -136,7 +134,7 @@ public class TreeUtils {
         }
 
         //recalculate the node's height
-        //System.out.println("height "+heightOfAVL(node));
+        
         node.setHeight(node.getHeight());//set node height to max of children+1
         
 
@@ -155,9 +153,9 @@ public class TreeUtils {
     	int keyOfValue=AVLTree.calculateStringKey(value);
         // Your code here
         //if node is null
-    	//System.out.println("value n "+value);
+    	
         if(node==null||node == AVLTreeNode.EMPTY_NODE){
-        	System.out.println("value "+value);
+        	
 		
             node= new AVLTreeNode(keyOfValue,value);
         }
@@ -169,21 +167,18 @@ public class TreeUtils {
         {
         	if(node.hasLeft()){
         		node.setLeft(insert(node.getLeft(),value));
-        		System.out.println(keyOfValue+" < "+node.getKey()+" left ");
+        		
         	}
         	else{
-        		System.out.println(keyOfValue+" < "+node.getKey()+" left ");
         		node.setLeft(new AVLTreeNode(keyOfValue,value));
         	}
             //check for and repair imbalance
             if(node.getBalanceFactor()==2)
             {
-            	System.out.println("Wrong -2 bf");
-                return rebalanceLeft(node,keyOfValue);
+            	return rebalanceLeft(node,keyOfValue);
             }
             else if(node.getBalanceFactor()==-2)
             {
-            	System.out.println("Gotcha -2 bf");
             	return rebalanceRight(node,keyOfValue);
             }
             	//else if(node.getBalanceFactor()<-1)
@@ -195,12 +190,10 @@ public class TreeUtils {
             
             if(node.hasRight())
             {
-            	System.out.println(keyOfValue+" > "+node.getKey()+" right ");
             	node.setRight(insert(node.getRight(),value));
             }
             else{
             	node.setRight(new AVLTreeNode(keyOfValue,value));
-            	System.out.println(keyOfValue+" > "+node.getKey()+" right ");
             	
             
             }
@@ -215,7 +208,7 @@ public class TreeUtils {
         }
 
         //recalculate the node's height
-        //System.out.println("height "+heightOfAVL(node));
+        
         node.setHeight(node.getHeight());//set node height to max of children+1
         
 
@@ -320,7 +313,6 @@ public class TreeUtils {
     	{
     		successorInfo.add(node.getKey());
     		successorInfo.add(node.getValue());
-    		System.out.println(successorInfo);
     		return successorInfo;
     	}
     	return inOrderSuccessor(node.getLeft());
@@ -329,71 +321,52 @@ public class TreeUtils {
 
     public static AVLTreeNode rebalanceLeft(AVLTreeNode node , Integer key)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
-    	System.out.println("treeee: ");
-    	obj.write(node);
-        if(key<node.getLeft().getKey())
+    	if(key<node.getLeft().getKey())
         {
             //case  1 applies
-        	System.out.println("hello left left");
-            return rotateWithLeftChild(node);
+        	return rotateWithLeftChild(node);
 
         }
         else
         {
-        	System.out.println("hello doublerotatewithleftchild");
-            //case 2 applies
+        	//case 2 applies
             return doubleRotateWithLeftChild(node);
         }
     }
     
     public static AVLTreeNode rebalanceLeftDelete(AVLTreeNode node)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
-    	System.out.println("treeee: ");
-    	obj.write(node);
     	if(node.getRight()==null){return rotateWithLeftChild(node);}
         if(node.getLeft().getHeight()>node.getRight().getHeight())
         {
             //case  1 applies
-        	System.out.println("hello left left");
-            return rotateWithLeftChild(node);
+        	return rotateWithLeftChild(node);
 
         }
         else
         {
-        	System.out.println("hello doublerotatewithleftchild");
-            //case 2 applies
+        	//case 2 applies
             return doubleRotateWithLeftChild(node);
         }
     }
 
     public static AVLTreeNode rebalanceRight(AVLTreeNode node , Integer key)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
-    	System.out.println("TREEEE: "+node);
-    	obj.write(node);
-        if(key>node.getRight().getKey())
+    	if(key>node.getRight().getKey())
         {
             //case  4 applies
-        	System.out.println("hello right right");
-        	System.out.println("key "+key+"node key "+node.getKey());
-            return rotateWithRightChild(node);
+        	return rotateWithRightChild(node);
 
         }
         else
         {
             //case 3 applies
-        	System.out.println("hello doublerotatewithrightchild");
-            return doubleRotateWithRightChild(node);
+        	return doubleRotateWithRightChild(node);
         }
     }
     
     public static AVLTreeNode rebalanceRightDelete(AVLTreeNode node)
     {
-    	SimpleTreeWriterImpl obj = new SimpleTreeWriterImpl(System.out);
-    	System.out.println("TREEEE: "+node);
-    	obj.write(node);
     	if(node.getLeft()==null){return rotateWithRightChild(node);}
         if(node.getRight().getHeight()>node.getLeft().getHeight())
         {
@@ -405,8 +378,7 @@ public class TreeUtils {
         else
         {
             //case 3 applies
-        	System.out.println("hello doublerotatewithrightchild");
-            return doubleRotateWithRightChild(node);
+        	return doubleRotateWithRightChild(node);
         }
     }
     /**

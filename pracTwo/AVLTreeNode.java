@@ -1,3 +1,4 @@
+
 /**
  * Implements a node suitable for building AVL tree structures.
  * 
@@ -31,7 +32,7 @@ public class AVLTreeNode {
 	 */
 	public AVLTreeNode(Integer key, String value) { 
 		this(null, key, null);
-		System.out.println(value);
+		
 		this.value =value;
 		
 
@@ -52,7 +53,7 @@ public class AVLTreeNode {
 	public String valueOfKey(AVLTreeNode node,Integer key)
 	
 	{
-		System.out.println(node + "  key "+key);
+		
 		String valueString="";
 		if(key<this.key) return valueOfKey(node.getLeft(),key);
 		else if(key>this.key) return valueOfKey(node.getRight(),key);
