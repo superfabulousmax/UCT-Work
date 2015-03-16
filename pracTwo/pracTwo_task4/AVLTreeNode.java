@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
 /**
  * Implements a node suitable for building AVL tree structures.
  * 
@@ -241,13 +245,6 @@ public class AVLTreeNode {
 	 */
 	public void addGroupedLetters(String value) {
 		groupedLetters.add(value);
-	
 
-
-
-
-
-
-
-
+	}
 }

@@ -83,10 +83,10 @@ public class TreeUI {
 
 		public void execute(String argument) throws IllegalArgumentException {
 			try {
-				if(argument=="") throw new IllegalArgumentException("Insert "+argument+" : invalid: Form should be insert <key value>");
+				if(argument==""&argument==null) throw new IllegalArgumentException("Insert "+argument+" : invalid: Form should be insert <key value>");
 				if(Character.isLetter(argument.charAt(0)))
 					target.insert(argument);
-				else target.insert(Integer.parseInt(argument));
+				
 			}
 			catch (NumberFormatException numFormE) {
 				throw new IllegalArgumentException("Insert "+argument+" : argument not an integer.");
@@ -94,6 +94,7 @@ public class TreeUI {
 			
 		}
 	}
+
 	private class Delete extends Command {
 		public String help() { return "delete <key value>"; }
 
@@ -163,7 +164,7 @@ public class TreeUI {
 				String response="";
 				if(Character.isLetter(argument.charAt(0)))
 					response = target.contains(argument) ? "Yes" : "No";
-				else response = target.contains(Integer.parseInt(argument)) ? "Yes" : "No";
+				
 				System.out.println(response);
 			}
 			catch (NumberFormatException numFormE) {

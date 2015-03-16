@@ -8,7 +8,7 @@ import java.io.PrintStream;
 public class AVLTree {
 
 	private AVLTreeNode root;
-	private final static String [] alphabet = {"","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}; 
+	public final static String [] alphabet = {"","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"}; 
 
 
 	/**
@@ -52,11 +52,7 @@ public class AVLTree {
 	/**
 	 * Insert the given key into the tree.
 	 */
-	public void insert(Integer key) {
-
-		root = TreeUtils.insert(root, key);
-
-	}
+	
 	public void insert(String value) {
 		
 		root = TreeUtils.insert(root,value);
@@ -88,9 +84,8 @@ public class AVLTree {
 	 * Delete the given string value from tree structure
 -	 */
 	public void delete(String value){
-		//calculate key based on the position of the alphabet
-		Integer key = calculateStringKey(value);
-		root = TreeUtils.delete(root, key);
+		
+		root = TreeUtils.delete(root, value);
 	}
 	/**
 	 * Find the given key Letter and return data about the letter key
