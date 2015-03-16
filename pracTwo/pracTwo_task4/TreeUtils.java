@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.omg.CORBA.portable.ValueOutputStream;
+
 
 /**
  * Utility procedures for binary tree structures.
  * 
- * @author Stephan Jamieson
+ * @author Sinead Urisohn
  * @version 25/2/2015
  */
 public class TreeUtils {
@@ -25,28 +25,7 @@ public class TreeUtils {
         }
     }
 
-    /** 
-     * Determine whether the given tree structure contains the given key.
-     *@param key is the key to search for
-     *@param node is the node to match the key with
-     *@return boolean value corresponding to if node contains key
-     */
-    public static boolean contains(AVLTreeNode node, Integer key) {
-        // Your code here.
-        while(node != null)
-        {
-            if(key.compareTo(node.getKey())<0)
-                node =node.getLeft();
-            else if(key.compareTo(node.getKey())>0)
-                node =node.getRight();
-            else //found
-                return true;
-
-        }
-        //else not found
-        return false;
-
-    } 
+    
     /** 
      * Determine whether the given tree structure contains the String value
      *@param key is the key to search for
@@ -77,152 +56,80 @@ public class TreeUtils {
      *@param key
      *@return a root node that may or may not be the one that was passed in.
      */
-    public static AVLTreeNode insert(AVLTreeNode node, Integer key) {
-    	
+    public static AVLTreeNode insert(AVLTreeNode node, String value) {
+
+        int keyOfValue=AVLTree.calculateStringKey(value);
         // Your code here
         //if node is null
-        if(node==null||node == AVLTreeNode.EMPTY_NODE)
-            node= new AVLTreeNode(key);
-        else if(key==node.getKey());//do nothing
+        if(node==null||node == AVLTreeNode.EMPTY_NODE){
+
+            node= new AVLTreeNode(keyOfValue,value);
+        }
+        else if(keyOfValue==node.getKey()){
+            //add this to arrayList.....
+            node.addGroupedLetters(value);
+
+        }
+
         //else if key less than key at node
         //insert left
-        else if(key<node.getKey())
+        else if(keyOfValue<node.getKey())
         {
-        	if(node.hasLeft()){
-        		node.setLeft(insert(node.getLeft(),key));
-        		System.out.println(key+" < "+node.getKey()+" left ");
-        	}
-        	else{
-        		System.out.println(key+" < "+node.getKey()+" left ");
-        		node.setLeft(new AVLTreeNode(key));
-        	}
+            if(node.hasLeft()){
+                node.setLeft(insert(node.getLeft(),value));
+
+            }
+            else{
+
+                node.setLeft(new AVLTreeNode(keyOfValue,value));
+            }
+
             //check for and repair imbalance
             if(node.getBalanceFactor()==2)
             {
-            	System.out.println("Wrong -2 bf");
-                return rebalanceLeft(node,key);
+                return rebalanceLeft(node,keyOfValue);
             }
             else if(node.getBalanceFactor()==-2)
             {
-            	System.out.println("Gotcha -2 bf");
-            	return rebalanceRight(node,key);
+
+                return rebalanceRight(node,keyOfValue);
             }
-            	//else if(node.getBalanceFactor()<-1)
+            //else if(node.getBalanceFactor()<-1)
 
         }
-        else if(key>node.getKey())
+        else if(keyOfValue>node.getKey())
         {
             //key greater so insert right
-            
+
             if(node.hasRight())
             {
-            	System.out.println(key+" > "+node.getKey()+" right ");
-            	node.setRight(insert(node.getRight(),key));
+
+                node.setRight(insert(node.getRight(),value));
             }
             else{
-            	node.setRight(new AVLTreeNode(key));
-            	System.out.println(key+" > "+node.getKey()+" right ");
-            	
-            
+                node.setRight(new AVLTreeNode(keyOfValue,value));
             }
-        	//check for imbalance and repair it
+
+            //check for imbalance and repair it
             if(node.getBalanceFactor()==-2)
             {
-                return rebalanceRight(node,key);
+                return rebalanceRight(node,keyOfValue);
             }
             else if(node.getBalanceFactor()==2)
-            	return rebalanceLeft(node,key);
+                return rebalanceLeft(node,keyOfValue);
 
         }
 
         //recalculate the node's height
-        //System.out.println("height "+heightOfAVL(node));
         node.setHeight(node.getHeight());//set node height to max of children+1
-        
+
 
 
         return node;
 
     }
     
-    /**
-     * Recursive implementation of insert on an AVLTreeNode structure.
-     *@param node- root node
-     *@param key
-     *@return a root node that may or may not be the one that was passed in.
-     */
-    public static AVLTreeNode insert(AVLTreeNode node, String value) {
-    	int keyOfValue=AVLTree.calculateStringKey(value);
-        // Your code here
-        //if node is null
-    	//System.out.println("value n "+value);
-        if(node==null||node == AVLTreeNode.EMPTY_NODE){
-        	System.out.println("value "+value);
-		
-            node= new AVLTreeNode(keyOfValue,value);
-        }
-        else if(keyOfValue==node.getKey())//replace value
-        	node.setValue(value);
-        //else if key less than key at node
-        //insert left
-        else if(keyOfValue<node.getKey())
-        {
-        	if(node.hasLeft()){
-        		node.setLeft(insert(node.getLeft(),value));
-        		System.out.println(keyOfValue+" < "+node.getKey()+" left ");
-        	}
-        	else{
-        		System.out.println(keyOfValue+" < "+node.getKey()+" left ");
-        		node.setLeft(new AVLTreeNode(keyOfValue,value));
-        	}
-            //check for and repair imbalance
-            if(node.getBalanceFactor()==2)
-            {
-            	System.out.println("Wrong -2 bf");
-                return rebalanceLeft(node,keyOfValue);
-            }
-            else if(node.getBalanceFactor()==-2)
-            {
-            	System.out.println("Gotcha -2 bf");
-            	return rebalanceRight(node,keyOfValue);
-            }
-            	//else if(node.getBalanceFactor()<-1)
 
-        }
-        else if(keyOfValue>node.getKey())
-        {
-            //key greater so insert right
-            
-            if(node.hasRight())
-            {
-            	System.out.println(keyOfValue+" > "+node.getKey()+" right ");
-            	node.setRight(insert(node.getRight(),value));
-            }
-            else{
-            	node.setRight(new AVLTreeNode(keyOfValue,value));
-            	System.out.println(keyOfValue+" > "+node.getKey()+" right ");
-            	
-            
-            }
-        	//check for imbalance and repair it
-            if(node.getBalanceFactor()==-2)
-            {
-                return rebalanceRight(node,keyOfValue);
-            }
-            else if(node.getBalanceFactor()==2)
-            	return rebalanceLeft(node,keyOfValue);
-
-        }
-
-        //recalculate the node's height
-        //System.out.println("height "+heightOfAVL(node));
-        node.setHeight(node.getHeight());//set node height to max of children+1
-        
-
-
-        return node;
-
-    }
     /**
      * Deletes a node from tree structure
      *@Param node and key 

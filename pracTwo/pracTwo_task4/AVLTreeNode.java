@@ -1,7 +1,7 @@
 /**
  * Implements a node suitable for building AVL tree structures.
  * 
- * @author Stephan Jamieson
+ * @author Sinead Urisohn
  * @version 3/3/2015
  */
 public class AVLTreeNode {
@@ -12,7 +12,7 @@ public class AVLTreeNode {
 	private int height;
 	private AVLTreeNode left;
 	private AVLTreeNode right;
-
+	private ArrayList<String> groupedLetters= new ArrayList<String>();
 
 	public final static AVLTreeNode EMPTY_NODE = new AVLTreeNode();
 	
@@ -31,9 +31,9 @@ public class AVLTreeNode {
 	 */
 	public AVLTreeNode(Integer key, String value) { 
 		this(null, key, null);
-		System.out.println(value);
-		this.value =value;
 		
+		this.value =value;
+		groupedLetters.add(value);//add value to list
 
 	}
 
@@ -52,7 +52,7 @@ public class AVLTreeNode {
 	public String valueOfKey(AVLTreeNode node,Integer key)
 	
 	{
-		System.out.println(node + "  key "+key);
+		
 		String valueString="";
 		if(key<this.key) return valueOfKey(node.getLeft(),key);
 		else if(key>this.key) return valueOfKey(node.getRight(),key);
@@ -119,14 +119,7 @@ public class AVLTreeNode {
 			return 1;
 		}
 	}
-	/**
-	 * Return height of this tree structure to calculate balance factor
-	 */
-	//code to be implemented
-	public int treeHeight()
-	{
-		return 0;
-	}
+	
 	/**
 	 * Obtain the balance factor for this node.
 	 */
@@ -193,23 +186,62 @@ public class AVLTreeNode {
 
 		return largest;
 	}
+	/**
+	 * Obtain number of items in dictionary grouping
+	 */
+	public int getNumberOfItems()
+	{
+		return  groupedLetters.size();
+	}
 
 
 	/**
 	 * Obtain a String representation of this node.
 	 */
 	public String toString() {
-		if(value!=null)
-		{
-			return this.getKey().toString()+"("+this.getBalanceFactor()+")("+value+")";
+		
+		String printList="";
+		int numberOfWords = getNumberOfItems();
+		if(numberOfWords>0){
+			printList+="("+AVLTree.alphabet[key]+")("+numberOfWords+")\n";
+				
+			HashSet<String> uniqueWords = new HashSet<String>();
+			//get unique words to print
+			for(int i =0;i<numberOfWords;i++)
+			{
+				uniqueWords.add(groupedLetters.get(i));
+				
+			}
+			//loop through hashset and print list
+			for(String word: uniqueWords){
+				printList+=word+"\n";
+			}
+			
+			
 		}
-		else{
-			if(this!=EMPTY_NODE)
-				return this.getKey().toString()+"("+this.getBalanceFactor()+")";
-			else
-				return "";
-		}
+		return printList;
+
 	}
+	/**
+	*Get list of words with same start letters 
+	*/
+	public ArrayList<String> getGroupedLetters() {
+		return groupedLetters;
+	}
+
+
+	/**
+	*Set the array  of words with same start letters 
+	*/
+	public void setGroupedLetters(ArrayList<String> groupedLetters) {
+		this.groupedLetters = groupedLetters;
+	}
+	/**
+	 *Method that adds Strings of same beginning letter to list
+	 */
+	public void addGroupedLetters(String value) {
+		groupedLetters.add(value);
+	
 
 
 

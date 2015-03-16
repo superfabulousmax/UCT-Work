@@ -6,8 +6,8 @@ import java.util.Scanner;
 /**
  * Write a description of class AVLTreeNodePrintStream here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Sinead Urisohn 
+ * @version 16/03/2015
  */
 public class SimpleTreeWriterImpl implements SimpleTreeWriter {
 

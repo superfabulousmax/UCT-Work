@@ -72,17 +72,7 @@ public class AVLTree {
 		writer.write(this.root);
 	}
 
-	/**
-	 * Determine whether the tree contains the given key.
-	 */
-	public boolean contains(Integer key) {
-		if (root==null) {
-			return false;
-		}
-		else {
-			return TreeUtils.contains(root, key);
-		}
-	}
+	
 	/**
 	 * Determine whether the tree contains a given String value
 	 */
