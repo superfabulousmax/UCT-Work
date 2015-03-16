@@ -26,6 +26,7 @@ public class TreeUI {
 		commands.put("contains", new Contains());
 		commands.put("print", new Print());
 		commands.put("write", new Write());
+		commands.put("find", new Find());
 		commands.put("help", new Help());
 		commands.put("quit", new Quit());
 		target = new AVLTree();
@@ -123,6 +124,21 @@ public class TreeUI {
 			//print
 			target.print(System.out);
 		}
+	}
+
+	private class Find extends Command {
+		public String help() { return "find <letter of key>"; }
+
+		public void execute(String argument) throws IllegalArgumentException {
+			if(argument!=null&argument.length()==1&Character.isLetter(argument.charAt(0)))
+			{
+				System.out.println(target.find(argument));
+			}
+			else
+				throw new IllegalArgumentException("Insert "+argument+" : not a letter");
+			
+		}
+		
 	}
 	private class Write extends Command {
 		public String help() { return "write <file name>"; }

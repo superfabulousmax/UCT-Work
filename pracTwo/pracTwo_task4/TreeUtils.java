@@ -25,6 +25,56 @@ public class TreeUtils {
         }
     }
 
+
+    /**
+     * finds data about any letter key
+     */
+    public static String find(AVLTreeNode node,String letter)
+    {
+
+        String out="";//output to return
+        Integer key = AVLTree.calculateStringKey(letter);
+
+        HashSet<String> uniqueWords = new HashSet<String>();
+        ArrayList<String> wordsToAddToList =new ArrayList<String>();//an array to add words to list separated by commas nicely
+
+        while(node!=null)
+        {
+            int numberOfWords = node.getNumberOfItems();
+            if(key.compareTo(node.getKey())<0)
+                node =node.getLeft();
+            else if(key.compareTo(node.getKey())>0)
+                node =node.getRight();
+            else{ //found
+
+
+                out+="("+numberOfWords+")(";
+
+                //get unique words to print
+                for(int i =0;i<numberOfWords;i++)
+                {
+                    uniqueWords.add(node.getGroupedLetters().get(i));
+
+                }
+
+                //get words in list separated by commas
+                for(String word: uniqueWords)
+                {
+                    wordsToAddToList.add(word);
+                }
+                for(int i =0;i<wordsToAddToList.size()-1;i++){
+                    out+=wordsToAddToList.get(i)+", ";
+                }
+                out+=wordsToAddToList.get(wordsToAddToList.size()-1)+")";
+
+                return out;
+            }
+        }
+
+        return "No entry found";
+    }
+
+
     
     /** 
      * Determine whether the given tree structure contains the String value
@@ -128,7 +178,7 @@ public class TreeUtils {
         return node;
 
     }
-    
+
 
     /**
      * Deletes a node from tree structure

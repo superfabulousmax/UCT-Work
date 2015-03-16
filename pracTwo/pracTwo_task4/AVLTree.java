@@ -92,6 +92,13 @@ public class AVLTree {
 		Integer key = calculateStringKey(value);
 		root = TreeUtils.delete(root, key);
 	}
+	/**
+	 * Find the given key Letter and return data about the letter key
+	 */
+	public String find(String letter)
+	{
+		return TreeUtils.find(root, letter);
+	}
 
 
 }
