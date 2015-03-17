@@ -121,7 +121,12 @@ public class TestTreeUtils{
 		tree.delete("d");
 		assertFalse("This should be false", tree.contains("d"));
 		assertTrue("This should be true",tree.getRoot().getValue()=="f"&tree.getRoot().getLeft().getValue()=="e"&tree.getRoot().getLeft().getLeft().getValue()=="b"&tree.getRoot().getRight().getValue()=="g"&tree.getRoot().getRight().getRight().getValue()=="h");
-
-
+		tree.delete("b");
+		assertFalse("This should be false", tree.contains("b"));
+		assertTrue("This should be true",tree.getRoot().getValue()=="f"&tree.getRoot().getLeft().getValue()=="e"&tree.getRoot().getRight().getValue()=="g"&tree.getRoot().getRight().getRight().getValue()=="h");
+		tree.delete("h");
+		assertFalse("This should be false", tree.contains("h"));
+		assertTrue("This should be true",tree.getRoot().getValue()=="f"&tree.getRoot().getLeft().getValue()=="e"&tree.getRoot().getRight().getValue()=="g");
+		
 	}
 }
