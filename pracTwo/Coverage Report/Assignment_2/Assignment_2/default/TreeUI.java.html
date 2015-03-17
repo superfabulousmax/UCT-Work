@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TreeUI.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Assignment 2 (17 Mar 2015 6:32:21 PM)</a> &gt; <a href="../../index.html" class="el_group">Assignment 2</a> &gt; <a href="../index.html" class="el_bundle">Assignment 2</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">TreeUI.java</span></div><h1>TreeUI.java</h1><pre class="source lang-java linenums">import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Scanner;
+/**
+ * Command line program interface.
+ * 
+ * @author Stephan Jamieson
+ * @version 4/3/2015
+ */
+public class TreeUI {
+
+	private AVLTree target;
+
+	private Map&lt;String, Command&gt; commands;
+
+
+<span class="nc" id="L21">	public TreeUI() {</span>
+<span class="nc" id="L22">		commands = new HashMap&lt;String, Command&gt;();</span>
+<span class="nc" id="L23">		commands.put(&quot;new&quot;, new New());</span>
+<span class="nc" id="L24">		commands.put(&quot;insert&quot;, new Insert());</span>
+<span class="nc" id="L25">		commands.put(&quot;delete&quot;, new Delete());</span>
+<span class="nc" id="L26">		commands.put(&quot;contains&quot;, new Contains());</span>
+<span class="nc" id="L27">		commands.put(&quot;print&quot;, new Print());</span>
+<span class="nc" id="L28">		commands.put(&quot;write&quot;, new Write());</span>
+<span class="nc" id="L29">		commands.put(&quot;help&quot;, new Help());</span>
+<span class="nc" id="L30">		commands.put(&quot;quit&quot;, new Quit());</span>
+<span class="nc" id="L31">		target = new AVLTree();</span>
+<span class="nc" id="L32">	}</span>
+
+	public void run() {
+<span class="nc" id="L35">		Scanner input = new Scanner(System.in);</span>
+<span class="nc" id="L36">		commands.get(&quot;help&quot;).execute(&quot;&quot;);</span>
+
+<span class="nc" id="L38">		while (true) {</span>
+<span class="nc" id="L39">			System.out.print(&quot;&gt;&quot;);</span>
+<span class="nc" id="L40">			Scanner line = new Scanner(input.nextLine());</span>
+
+<span class="nc bnc" id="L42" title="All 2 branches missed.">			String keyword = (line.hasNext() ? line.next().trim().toLowerCase() : &quot;&quot;);</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">			String argument = (line.hasNext() ? line.next() : &quot;&quot;);</span>
+
+<span class="nc bnc" id="L45" title="All 2 branches missed.">			if (commands.containsKey(keyword)) {</span>
+                try{
+<span class="nc" id="L47">				commands.get(keyword).execute(argument);</span>
+<span class="nc" id="L48">                }</span>
+<span class="nc" id="L49">                catch(Exception e)</span>
+                {
+<span class="nc" id="L51">                    System.out.println(e);</span>
+                }
+<span class="nc" id="L53">			}</span>
+			else {
+<span class="nc" id="L55">				System.out.println(&quot;Sorry, that command is not recognised. Type 'help' for assistance.&quot;);</span>
+			}
+		}
+	}
+
+
+	public static void main(String[] args) {
+<span class="nc" id="L62">		(new TreeUI()).run();</span>
+<span class="nc" id="L63">	}</span>
+
+<span class="nc" id="L65">	private abstract class Command {</span>
+		public abstract String help();
+
+		public abstract void execute(String argument) throws IllegalArgumentException;
+
+	}
+
+<span class="nc" id="L72">	private class New extends Command {</span>
+<span class="nc" id="L73">		public String help() { return &quot;new&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+			//create new AVL Tree replacing any previous one 
+<span class="nc" id="L77">			target =new AVLTree();</span>
+<span class="nc" id="L78">		}</span>
+	}
+<span class="nc" id="L80">	private class Insert extends Command {</span>
+<span class="nc" id="L81">		public String help() { return &quot;insert &lt;key value&gt;&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+			try {
+<span class="nc bnc" id="L85" title="All 2 branches missed.">				if(argument==&quot;&quot;) throw new IllegalArgumentException(&quot;Insert &quot;+argument+&quot; : invalid: Form should be insert &lt;key value&gt;&quot;);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				if(Character.isLetter(argument.charAt(0)))</span>
+<span class="nc" id="L87">					target.insert(argument);</span>
+<span class="nc" id="L88">				else target.insert(Integer.parseInt(argument));</span>
+<span class="nc" id="L89">			}</span>
+<span class="nc" id="L90">			catch (NumberFormatException numFormE) {</span>
+<span class="nc" id="L91">				throw new IllegalArgumentException(&quot;Insert &quot;+argument+&quot; : argument not an integer.&quot;);</span>
+			}    
+			
+<span class="nc" id="L94">		}</span>
+	}
+<span class="nc" id="L96">	private class Delete extends Command {</span>
+<span class="nc" id="L97">		public String help() { return &quot;delete &lt;key value&gt;&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+			//try {
+<span class="nc bnc" id="L101" title="All 2 branches missed.">				if(Character.isLetter(argument.charAt(0))){</span>
+					
+<span class="nc bnc" id="L103" title="All 2 branches missed.">					if( target.contains(argument)==false)</span>
+					{
+<span class="nc" id="L105">						System.out.println(&quot;Error! &quot;+argument+&quot; cannot be found in tree.&quot;);</span>
+<span class="nc" id="L106">					}</span>
+<span class="nc" id="L107">					else target.delete(argument);</span>
+					
+<span class="nc" id="L109">				}</span>
+				else 
+<span class="nc" id="L111">					throw new IllegalArgumentException(&quot;Delete &quot;+argument+&quot; : argument not a string.&quot;);</span>
+			//}
+//			catch (IllegalArgumentException numFormE) {
+//				throw new IllegalArgumentException(&quot;Delete &quot;+argument+&quot; : argument not a alphabetical String.&quot;);
+//			}    
+			
+<span class="nc" id="L117">		}</span>
+	}
+<span class="nc" id="L119">	private class Print extends Command {</span>
+<span class="nc" id="L120">		public String help() { return &quot;print&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+			//print
+<span class="nc" id="L124">			target.print(System.out);</span>
+<span class="nc" id="L125">		}</span>
+	}
+<span class="nc" id="L127">	private class Write extends Command {</span>
+<span class="nc" id="L128">		public String help() { return &quot;write &lt;file name&gt;&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+			//write
+			try{
+<span class="nc" id="L133">				target.print(new PrintStream(new File(argument)));</span>
+<span class="nc" id="L134">			}catch(FileNotFoundException e)</span>
+			{
+<span class="nc" id="L136">				System.out.println(e);</span>
+			}
+<span class="nc" id="L138">		}</span>
+	}
+
+
+<span class="nc" id="L142">	private class Contains extends Command {</span>
+<span class="nc" id="L143">		public String help() { return &quot;contains &lt;key value&gt;&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+			try {
+<span class="nc" id="L147">				String response=&quot;&quot;;</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">				if(Character.isLetter(argument.charAt(0)))</span>
+<span class="nc bnc" id="L149" title="All 2 branches missed.">					response = target.contains(argument) ? &quot;Yes&quot; : &quot;No&quot;;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">				else response = target.contains(Integer.parseInt(argument)) ? &quot;Yes&quot; : &quot;No&quot;;</span>
+<span class="nc" id="L151">				System.out.println(response);</span>
+<span class="nc" id="L152">			}</span>
+<span class="nc" id="L153">			catch (NumberFormatException numFormE) {</span>
+<span class="nc" id="L154">				throw new IllegalArgumentException(&quot;Insert &quot;+argument+&quot; : argument not an integer.&quot;);</span>
+			}    
+<span class="nc" id="L156">			catch(IllegalArgumentException e)</span>
+			{
+<span class="nc" id="L158">				throw new IllegalArgumentException(&quot;Insert &quot;+argument+&quot; : argument not alpahabetical&quot;);</span>
+			}
+<span class="nc" id="L160">		}</span>
+	}
+
+<span class="nc" id="L163">	private class Help extends Command {</span>
+<span class="nc" id="L164">		public String help() { return &quot;help&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+
+<span class="nc" id="L168">			Iterator&lt;String&gt; keywordIter = commands.keySet().iterator();</span>
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">			if (keywordIter.hasNext()) {</span>
+<span class="nc" id="L171">				System.out.print(&quot;Commands: &quot;+commands.get(keywordIter.next()).help());</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">				while (keywordIter.hasNext()) {</span>
+<span class="nc" id="L173">					System.out.print(&quot;, &quot;+commands.get(keywordIter.next()).help());</span>
+				}
+<span class="nc" id="L175">				System.out.println(&quot;.&quot;);</span>
+<span class="nc" id="L176">			}</span>
+			else {
+<span class="nc" id="L178">				System.out.println(&quot;No commands installed.&quot;);</span>
+			}
+<span class="nc" id="L180">		}</span>
+	}
+
+<span class="nc" id="L183">	private class Quit extends Command {</span>
+<span class="nc" id="L184">		public String help() { return &quot;quit&quot;; }</span>
+
+		public void execute(String argument) throws IllegalArgumentException {
+<span class="nc" id="L187">			System.exit(0);</span>
+<span class="nc" id="L188">		}</span>
+	}
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>Assignment 2 (17 Mar 2015 6:32:21 PM)</div></body></html>

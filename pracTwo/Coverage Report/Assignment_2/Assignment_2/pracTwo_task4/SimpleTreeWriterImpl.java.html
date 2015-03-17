@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>SimpleTreeWriterImpl.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Assignment 2 (17 Mar 2015 6:32:21 PM)</a> &gt; <a href="../../index.html" class="el_group">Assignment 2</a> &gt; <a href="../index.html" class="el_bundle">Assignment 2</a> &gt; <a href="index.source.html" class="el_package">pracTwo_task4</a> &gt; <span class="el_source">SimpleTreeWriterImpl.java</span></div><h1>SimpleTreeWriterImpl.java</h1><pre class="source lang-java linenums">package pracTwo_task4;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Scanner;
+/**
+ * Write a description of class AVLTreeNodePrintStream here.
+ * 
+ * @author Sinead Urisohn 
+ * @version 16/03/2015
+ */
+public class SimpleTreeWriterImpl implements SimpleTreeWriter {
+
+    private PrintStream output;
+    
+<span class="nc" id="L18">    public SimpleTreeWriterImpl(PrintStream output) {</span>
+<span class="nc" id="L19">        this.setDestination(output);</span>
+<span class="nc" id="L20">    }</span>
+
+    public void setDestination(PrintStream output) {
+<span class="nc" id="L23">        this.output=output;</span>
+<span class="nc" id="L24">    }</span>
+    
+    public void write(AVLTreeNode node) {
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (node==null) {</span>
+<span class="nc" id="L28">            output.println();</span>
+<span class="nc" id="L29">        }</span>
+        else {
+<span class="nc" id="L31">            List&lt;AVLTreeNode&gt; level = TreeUtils.levelZero(node);</span>
+<span class="nc" id="L32">            final int labelSize = node.getLargest();</span>
+   
+<span class="nc bnc" id="L34" title="All 2 branches missed.">            for(int levelNum=0; levelNum&lt;node.getHeight(); levelNum++) {</span>
+<span class="nc" id="L35">                final int nodeSpacing = powerOf2(node.getHeight()-levelNum)-1;</span>
+<span class="nc" id="L36">                writeLevel(nodeSpacing, labelSize, level);</span>
+<span class="nc" id="L37">                level = TreeUtils.nextLevel(level);</span>
+            }
+        }
+<span class="nc" id="L40">    }</span>
+    
+    
+    
+        
+        private void writeLevel(final int nodeSpacing, final int labelWidth, final List&lt;AVLTreeNode&gt; level) {
+<span class="nc" id="L46">            int height = 0;</span>
+<span class="nc" id="L47">            String leadingSpace = makeSpacing((nodeSpacing/2)*labelWidth);</span>
+<span class="nc" id="L48">            String interNodeSpace = makeSpacing(nodeSpacing*labelWidth);</span>
+
+<span class="nc" id="L50">            final List&lt;Scanner&gt; raster = new ArrayList&lt;Scanner&gt;();</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">            for (AVLTreeNode node : level) {</span>
+<span class="nc" id="L52">                String label = node.toString();</span>
+<span class="nc" id="L53">                height = Math.max(height, label.split(&quot;\n&quot;).length);</span>
+<span class="nc" id="L54">                raster.add(new Scanner(node.toString()));</span>
+            }
+
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            while (height&gt;0) {</span>
+<span class="nc" id="L58">                Iterator&lt;Scanner&gt; iterator = raster.iterator();</span>
+                
+<span class="nc" id="L60">                output.print(leadingSpace);</span>
+<span class="nc" id="L61">                writeNode(iterator.next(), labelWidth);</span>
+                
+<span class="nc bnc" id="L63" title="All 2 branches missed.">                while (iterator.hasNext()) {</span>
+<span class="nc" id="L64">                    output.print(interNodeSpace);</span>
+<span class="nc" id="L65">                    writeNode(iterator.next(), labelWidth);</span>
+                }
+<span class="nc" id="L67">                output.println();</span>
+<span class="nc" id="L68">                height--;                </span>
+        }
+       
+            
+<span class="nc" id="L72">    }</span>
+        
+        
+    
+    private void writeNode(Scanner scanner, int labelWidth) {
+<span class="nc" id="L77">        final String blankNode = makeSpacing(labelWidth);</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        if (!scanner.hasNextLine()) {</span>
+<span class="nc" id="L79">            output.printf(blankNode);</span>
+<span class="nc" id="L80">        }</span>
+        else {
+<span class="nc" id="L82">            output.printf(&quot;%-&quot;+labelWidth+&quot;s&quot;, scanner.nextLine());</span>
+        }        
+<span class="nc" id="L84">    }</span>
+
+    private static int powerOf2(int power) {
+<span class="nc bnc" id="L87" title="All 2 branches missed.">        if (power==0) {</span>
+<span class="nc" id="L88">            return 1;</span>
+        }
+        else {
+<span class="nc" id="L91">            return 2*powerOf2(power-1);</span>
+        }
+    }
+        
+    private static String makeSpacing(int size) {
+<span class="nc" id="L96">        StringBuilder builder = new StringBuilder(size);</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        while(size&gt;0) {</span>
+<span class="nc" id="L98">            builder.append(' ');</span>
+<span class="nc" id="L99">            size--;</span>
+        }
+<span class="nc" id="L101">        return builder.toString();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>Assignment 2 (17 Mar 2015 6:32:21 PM)</div></body></html>

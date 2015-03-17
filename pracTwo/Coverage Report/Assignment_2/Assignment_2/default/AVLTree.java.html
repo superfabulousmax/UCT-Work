@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>AVLTree.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Assignment 2 (17 Mar 2015 6:32:21 PM)</a> &gt; <a href="../../index.html" class="el_group">Assignment 2</a> &gt; <a href="../index.html" class="el_bundle">Assignment 2</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">AVLTree.java</span></div><h1>AVLTree.java</h1><pre class="source lang-java linenums">import java.io.PrintStream;
+/**
+ * Implementation of an AVL Tree
+ * 
+ * @author Stephan Jamieson
+ * @version 3/3/2015
+ */
+public class AVLTree {
+
+	private AVLTreeNode root;
+<span class="fc" id="L11">	public final static String [] alphabet = {&quot;&quot;,&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,&quot;E&quot;,&quot;F&quot;,&quot;G&quot;,&quot;H&quot;,&quot;I&quot;,&quot;J&quot;,&quot;K&quot;,&quot;L&quot;,&quot;M&quot;,&quot;N&quot;,&quot;O&quot;,&quot;P&quot;,&quot;Q&quot;,&quot;R&quot;,&quot;S&quot;,&quot;T&quot;,&quot;U&quot;,&quot;V&quot;,&quot;W&quot;,&quot;X&quot;,&quot;Y&quot;,&quot;Z&quot;}; </span>
+
+
+	/**
+	 * Calculate the value of String based on the position of the alphabet of the first letter
+	 * 
+	 */
+	public static Integer calculateStringKey(String value)
+	{
+<span class="fc" id="L20">		int key=0;</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">		for(int i =1;i&lt;alphabet.length;i++)</span>
+		{
+<span class="fc bfc" id="L23" title="All 2 branches covered.">			if(alphabet[i].equalsIgnoreCase((value.substring(0,1))))</span>
+			{
+<span class="fc" id="L25">				key=i;</span>
+<span class="fc" id="L26">				return key;</span>
+			}
+		}
+<span class="nc" id="L29">		return key;</span>
+	}
+	/**
+	*Get root node of tree for test class
+	*/
+	public AVLTreeNode getRoot()
+	{
+<span class="fc" id="L36">		return this.root;</span>
+	}
+
+
+	/**
+	 * Create an empty AVL tree
+	 */
+<span class="fc" id="L43">	public AVLTree() {</span>
+<span class="fc" id="L44">		root = null;</span>
+<span class="fc" id="L45">	}</span>
+
+	/**
+	 * get height
+	 */
+	public Integer getHeight()
+	{
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if(root == null)</span>
+<span class="nc" id="L53">			return 0;</span>
+		else
+<span class="nc" id="L55">			return root.getHeight();</span>
+	}
+
+
+	/**
+	 * Insert the given key into the tree.
+	 */
+	public void insert(Integer key) {
+
+<span class="fc" id="L64">		root = TreeUtils.insert(root, key);</span>
+
+<span class="fc" id="L66">	}</span>
+	public void insert(String value) {
+		
+<span class="fc" id="L69">		root = TreeUtils.insert(root,value);</span>
+
+<span class="fc" id="L71">	}</span>
+
+	/**
+	 * Use the given PrintStream object to output a textual representation of this tree.
+	 */
+	public void print(PrintStream printStream) {
+
+<span class="nc" id="L78">		SimpleTreeWriter writer = new SimpleTreeWriterImpl(printStream);</span>
+<span class="nc" id="L79">		writer.write(this.root);</span>
+<span class="nc" id="L80">	}</span>
+
+	/**
+	 * Determine whether the tree contains the given key.
+	 */
+	public boolean contains(Integer key) {
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">		if (root==null) {</span>
+<span class="nc" id="L87">			return false;</span>
+		}
+		else {
+<span class="fc" id="L90">			return TreeUtils.contains(root, key);</span>
+		}
+	}
+	/**
+	 * Determine whether the tree contains a given String value
+	 */
+	public boolean contains(String value) {
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">		if (root==null) {</span>
+<span class="nc" id="L98">			return false;</span>
+		}
+		else {
+<span class="fc" id="L101">			return TreeUtils.contains(root, value);</span>
+		}
+	}
+	/**
+	 * Delete the given string value from tree structure
+-	 */
+	public void delete(String value){
+		//calculate key based on the position of the alphabet
+<span class="fc" id="L109">		Integer key = calculateStringKey(value);</span>
+<span class="fc" id="L110">		root = TreeUtils.delete(root, key);</span>
+<span class="fc" id="L111">	}</span>
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>Assignment 2 (17 Mar 2015 6:32:21 PM)</div></body></html>

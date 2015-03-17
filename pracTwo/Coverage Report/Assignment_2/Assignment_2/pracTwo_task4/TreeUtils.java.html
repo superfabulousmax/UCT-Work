@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TreeUtils.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">Assignment 2 (17 Mar 2015 6:32:21 PM)</a> &gt; <a href="../../index.html" class="el_group">Assignment 2</a> &gt; <a href="../index.html" class="el_bundle">Assignment 2</a> &gt; <a href="index.source.html" class="el_package">pracTwo_task4</a> &gt; <span class="el_source">TreeUtils.java</span></div><h1>TreeUtils.java</h1><pre class="source lang-java linenums">package pracTwo_task4;
+
+import java.io.ObjectInputStream.GetField;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+
+
+
+
+/**
+ * Utility procedures for binary tree structures.
+ * 
+ * @author Sinead Urisohn
+ * @version 25/2/2015
+ */
+<span class="nc" id="L18">public class TreeUtils {</span>
+        
+    /**
+     * Obtain the height value of the given node.
+     * @return 0 if &lt;code&gt;node==null&lt;/code&gt;, otherwise &lt;code&gt;node.getHeight()&lt;/code&gt;.
+     */
+    public static int height(AVLTreeNode node) {
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        if (node==null) {</span>
+<span class="nc" id="L26">            return 0;</span>
+        }
+        else {
+<span class="nc" id="L29">            return node.getHeight();</span>
+        }
+    }
+
+
+    /**
+     * finds data about any letter key
+     */
+    public static String find(AVLTreeNode node,String letter)
+    {
+
+<span class="fc" id="L40">        String out=&quot;&quot;;//output to return</span>
+<span class="fc" id="L41">        Integer key = AVLTree.calculateStringKey(letter);</span>
+
+<span class="fc" id="L43">        HashSet&lt;String&gt; uniqueWords = new HashSet&lt;String&gt;();</span>
+<span class="fc" id="L44">        ArrayList&lt;String&gt; wordsToAddToList =new ArrayList&lt;String&gt;();//an array to add words to list separated by commas nicely</span>
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        while(node!=null)</span>
+        {
+<span class="fc" id="L48">            int numberOfWords = node.getNumberOfItems();</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">            if(key.compareTo(node.getKey())&lt;0)</span>
+<span class="fc" id="L50">                node =node.getLeft();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">            else if(key.compareTo(node.getKey())&gt;0)</span>
+<span class="fc" id="L52">                node =node.getRight();</span>
+            else{ //found
+
+
+<span class="fc" id="L56">                out+=&quot;(&quot;+numberOfWords+&quot;)(&quot;;</span>
+
+                //get unique words to print
+<span class="fc bfc" id="L59" title="All 2 branches covered.">                for(int i =0;i&lt;numberOfWords;i++)</span>
+                {
+<span class="fc" id="L61">                    uniqueWords.add(node.getGroupedLetters().get(i));</span>
+
+                }
+
+                //get words in list separated by commas
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                for(String word: uniqueWords)</span>
+                {
+<span class="fc" id="L68">                    wordsToAddToList.add(word);</span>
+                }
+<span class="fc bfc" id="L70" title="All 2 branches covered.">                for(int i =0;i&lt;wordsToAddToList.size()-1;i++){</span>
+<span class="fc" id="L71">                    out+=wordsToAddToList.get(i)+&quot;, &quot;;</span>
+                }
+<span class="fc" id="L73">                out+=wordsToAddToList.get(wordsToAddToList.size()-1)+&quot;)&quot;;</span>
+
+<span class="fc" id="L75">                return out;</span>
+            }
+        }
+
+<span class="fc" id="L79">        return &quot;No entry found&quot;;</span>
+    }
+
+
+    
+    /** 
+     * Determine whether the given tree structure contains the String value
+     *@param key is the key to search for
+     *@param node is the node to match the key with
+     *@return boolean value corresponding to if node contains key
+     */
+    public static boolean contains(AVLTreeNode node, String value) {
+        // Your code here.
+<span class="fc" id="L92">        Integer keyOfValue =AVLTree.calculateStringKey(value);</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        while(node != null)</span>
+        {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            if(keyOfValue.compareTo(node.getKey())&lt;0)</span>
+<span class="fc" id="L96">                node =node.getLeft();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            else if(keyOfValue.compareTo(node.getKey())&gt;0)</span>
+<span class="fc" id="L98">                node =node.getRight();</span>
+            else //found key now determine whether string is same
+            {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">                for(int i =0;i&lt; node.getGroupedLetters().size();i++)</span>
+                {
+<span class="fc bfc" id="L103" title="All 2 branches covered.">                    if(value.equals(node.getGroupedLetters().get(i)))</span>
+                    {
+                        
+<span class="fc" id="L106">                        return true;</span>
+                    }
+                    
+                }
+<span class="fc" id="L110">                return false;</span>
+
+            }
+
+
+        }
+        //else not found
+<span class="fc" id="L117">        return false;</span>
+
+    } 
+
+    /**
+     * Recursive implementation of insert on an AVLTreeNode structure.
+     *@param node- root node
+     *@param key
+     *@return a root node that may or may not be the one that was passed in.
+     */
+    public static AVLTreeNode insert(AVLTreeNode node, String value) {
+
+<span class="fc" id="L129">        int keyOfValue=AVLTree.calculateStringKey(value);</span>
+        // Your code here
+        //if node is null
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">        if(node==null||node == AVLTreeNode.EMPTY_NODE){</span>
+
+<span class="fc" id="L134">            node= new AVLTreeNode(keyOfValue,value);</span>
+<span class="fc" id="L135">        }</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        else if(keyOfValue==node.getKey()){</span>
+            //add this to arrayList.....
+<span class="fc" id="L138">            node.addGroupedLetters(value);</span>
+
+<span class="fc" id="L140">        }</span>
+
+        //else if key less than key at node
+        //insert left
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        else if(keyOfValue&lt;node.getKey())</span>
+        {
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">            if(node.hasLeft()){</span>
+<span class="nc" id="L147">                node.setLeft(insert(node.getLeft(),value));</span>
+
+<span class="nc" id="L149">            }</span>
+            else{
+
+<span class="fc" id="L152">                node.setLeft(new AVLTreeNode(keyOfValue,value));</span>
+            }
+
+            //check for and repair imbalance
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">            if(node.getBalanceFactor()==2)</span>
+            {
+<span class="nc" id="L158">                return rebalanceLeft(node,keyOfValue);</span>
+            }
+<span class="pc bpc" id="L160" title="1 of 2 branches missed.">            else if(node.getBalanceFactor()==-2)</span>
+            {
+
+<span class="nc" id="L163">                return rebalanceRight(node,keyOfValue);</span>
+            }
+            //else if(node.getBalanceFactor()&lt;-1)
+
+        }
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        else if(keyOfValue&gt;node.getKey())</span>
+        {
+            //key greater so insert right
+
+<span class="fc bfc" id="L172" title="All 2 branches covered.">            if(node.hasRight())</span>
+            {
+
+<span class="fc" id="L175">                node.setRight(insert(node.getRight(),value));</span>
+<span class="fc" id="L176">            }</span>
+            else{
+<span class="fc" id="L178">                node.setRight(new AVLTreeNode(keyOfValue,value));</span>
+            }
+
+            //check for imbalance and repair it
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            if(node.getBalanceFactor()==-2)</span>
+            {
+<span class="fc" id="L184">                return rebalanceRight(node,keyOfValue);</span>
+            }
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">            else if(node.getBalanceFactor()==2)</span>
+<span class="nc" id="L187">                return rebalanceLeft(node,keyOfValue);</span>
+
+        }
+
+        //recalculate the node's height
+<span class="fc" id="L192">        node.setHeight(node.getHeight());//set node height to max of children+1</span>
+
+
+
+<span class="fc" id="L196">        return node;</span>
+
+    }
+
+
+    /**
+     * Deletes a node from tree structure
+     *@Param node and key 
+     *@return node with new tree structure
+     */
+    public static AVLTreeNode delete(AVLTreeNode node, String value){
+
+<span class="fc" id="L208">        Integer key =AVLTree.calculateStringKey(value);</span>
+        //The key to delete does not exist
+
+<span class="fc bfc" id="L211" title="All 2 branches covered.">        if(node.getGroupedLetters().size()&gt;1)</span>
+        {
+
+<span class="fc bfc" id="L214" title="All 2 branches covered.">            if (node.getGroupedLetters().remove(value)) return node;</span>
+            
+
+        }
+
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">        if(node==null)</span>
+<span class="nc" id="L220">            return null;</span>
+        //if in left subtree
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        if(key.compareTo(node.getKey())&lt;0)</span>
+        {
+<span class="fc" id="L224">            node.setLeft(delete(node.getLeft(),value));</span>
+            //rebalance tree
+
+<span class="pc bpc" id="L227" title="1 of 2 branches missed.">            if(node.getBalanceFactor()==2)</span>
+            {
+
+<span class="nc" id="L230">                return rebalanceLeftDelete(node);</span>
+            }
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            else if(node.getBalanceFactor()==-2)</span>
+            {
+
+<span class="fc" id="L235">                return rebalanceRightDelete(node);//(node,node.getKey());</span>
+            }
+
+
+        }
+        //go right if in right subtreee
+<span class="pc bpc" id="L241" title="1 of 2 branches missed.">        else if(key.compareTo(node.getKey())&gt;0)</span>
+        {
+<span class="nc" id="L243">            node.setRight(delete(node.getRight(),value));</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">            if(node.getBalanceFactor()==2)</span>
+            {
+
+<span class="nc" id="L247">                return rebalanceLeftDelete(node);</span>
+            }
+<span class="nc bnc" id="L249" title="All 2 branches missed.">            else if(node.getBalanceFactor()==-2)</span>
+            {
+
+<span class="nc" id="L252">                return rebalanceRightDelete(node);//(node,node.getKey());</span>
+            }
+
+        }
+        //otherwise found and remove node
+        else{
+            //if no childs
+<span class="pc bpc" id="L259" title="3 of 6 branches missed.">            if(node.getLeft()==null&amp;node.getRight()==null)</span>
+            {
+<span class="fc" id="L261">                return null;</span>
+            }
+            //1 child
+<span class="nc bnc" id="L264" title="All 2 branches missed.">            if(node.getLeft()==null)</span>
+            {
+<span class="nc" id="L266">                return node.getRight();//connect right child to parent</span>
+            }
+<span class="nc bnc" id="L268" title="All 2 branches missed.">            if(node.getRight()==null)</span>
+            {
+<span class="nc" id="L270">                return node.getLeft();</span>
+            }
+            //else 2 childs
+<span class="nc" id="L273">            List successorInfo = inOrderSuccessor(node.getRight());//information to replace parent key to be deleted</span>
+<span class="nc" id="L274">            Integer inorderKey=(Integer)successorInfo.get(0);</span>
+<span class="nc" id="L275">            String valueName = (String)successorInfo.get(1);</span>
+<span class="nc" id="L276">            node.setValue(value);//change node String value</span>
+<span class="nc" id="L277">            node.setKey(inorderKey);//change key</span>
+<span class="nc" id="L278">            node.setRight(delete(node.getRight(), valueName));</span>
+            //check balance
+            //check for and repair imbalance
+<span class="nc bnc" id="L281" title="All 2 branches missed.">            if(node.getBalanceFactor()==2)</span>
+            {
+
+<span class="nc" id="L284">                return rebalanceLeftDelete(node);</span>
+            }
+<span class="nc bnc" id="L286" title="All 2 branches missed.">            else if(node.getBalanceFactor()==-2)</span>
+            {
+
+<span class="nc" id="L289">                return rebalanceRightDelete(node);//(node,node.getKey());</span>
+            }
+
+        }
+<span class="fc" id="L293">        node.setHeight(node.getHeight());//adjust height</span>
+<span class="fc" id="L294">        return node;</span>
+
+    }
+    
+    /**
+     * Obtain in-order successor
+     * @param node of tree to be searched in
+     *@return the smallest key for tree structure
+     */
+    private static List inOrderSuccessor(AVLTreeNode node)
+    {
+<span class="nc" id="L305">    	List successorInfo = new ArrayList();</span>
+<span class="nc bnc" id="L306" title="All 2 branches missed.">    	if(node.getLeft()==null)</span>
+    	{
+<span class="nc" id="L308">    		successorInfo.add(node.getKey());</span>
+<span class="nc" id="L309">    		successorInfo.add(node.getValue());</span>
+    		
+<span class="nc" id="L311">    		return successorInfo;</span>
+    	}
+<span class="nc" id="L313">    	return inOrderSuccessor(node.getLeft());</span>
+    }
+    
+
+    public static AVLTreeNode rebalanceLeft(AVLTreeNode node , Integer key)
+    {
+<span class="nc bnc" id="L319" title="All 2 branches missed.">        if(key&lt;node.getLeft().getKey())</span>
+        {
+            //case  1 applies
+        	
+<span class="nc" id="L323">            return rotateWithLeftChild(node);</span>
+
+        }
+        else
+        {
+        	
+            //case 2 applies
+<span class="nc" id="L330">            return doubleRotateWithLeftChild(node);</span>
+        }
+    }
+    
+    public static AVLTreeNode rebalanceLeftDelete(AVLTreeNode node)
+    {
+    	
+<span class="nc bnc" id="L337" title="All 2 branches missed.">    	if(node.getRight()==null){return rotateWithLeftChild(node);}</span>
+<span class="nc bnc" id="L338" title="All 2 branches missed.">        if(node.getLeft().getHeight()&gt;node.getRight().getHeight())</span>
+        {
+            //case  1 applies
+        	
+<span class="nc" id="L342">            return rotateWithLeftChild(node);</span>
+
+        }
+        else
+        {
+        	
+            //case 2 applies
+<span class="nc" id="L349">            return doubleRotateWithLeftChild(node);</span>
+        }
+    }
+
+    public static AVLTreeNode rebalanceRight(AVLTreeNode node , Integer key)
+    {
+    	
+    	
+    	
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">        if(key&gt;node.getRight().getKey())</span>
+        {
+            //case  4 applies
+        	
+<span class="fc" id="L362">            return rotateWithRightChild(node);</span>
+
+        }
+        else
+        {
+            //case 3 applies
+        	
+<span class="nc" id="L369">            return doubleRotateWithRightChild(node);</span>
+        }
+    }
+    
+    public static AVLTreeNode rebalanceRightDelete(AVLTreeNode node)
+    {
+    	
+    	
+    	
+<span class="pc bpc" id="L378" title="1 of 2 branches missed.">    	if(node.getLeft()==null){return rotateWithRightChild(node);}</span>
+<span class="nc bnc" id="L379" title="All 2 branches missed.">        if(node.getRight().getHeight()&gt;node.getLeft().getHeight())</span>
+        {
+            //case  4 applies
+        
+<span class="nc" id="L383">            return rotateWithRightChild(node);</span>
+
+        }
+        else
+        {
+            //case 3 applies
+        	
+<span class="nc" id="L390">            return doubleRotateWithRightChild(node);</span>
+        }
+    }
+    /**
+     * Rotate binary tree node with left child.
+     * This is a single rotation for case 1.
+     */
+    public static AVLTreeNode rotateWithLeftChild( AVLTreeNode k2 )
+    {
+        // Your code here
+<span class="nc" id="L400">        AVLTreeNode k1 = k2.getLeft();</span>
+<span class="nc" id="L401">        k2.setLeft(k1.getRight());</span>
+<span class="nc" id="L402">        k1.setRight(k2);</span>
+<span class="nc" id="L403">        return k1;</span>
+    }
+
+    /**
+     * Rotate binary tree node with right child.
+     * This is a single rotation for case 4.
+     */
+    public static AVLTreeNode rotateWithRightChild( AVLTreeNode k1 )
+    {
+        // Your code here
+<span class="fc" id="L413">        AVLTreeNode k2 = k1.getRight();</span>
+<span class="fc" id="L414">        k1.setRight(k2.getLeft());</span>
+<span class="fc" id="L415">        k2.setLeft(k1);</span>
+<span class="fc" id="L416">        return k2;</span>
+    }
+
+    /**
+     * Double rotate binary tree node: first rotate k3's left child
+     * with its right child; then rotate node k3 with the new left child.
+     * This is a double rotation for case 2.
+     */
+    public static AVLTreeNode doubleRotateWithLeftChild( AVLTreeNode k3 )
+    {
+        // Your code here.
+<span class="nc" id="L427">        k3.setLeft(rotateWithRightChild(k3.getLeft()));</span>
+<span class="nc" id="L428">        return rotateWithLeftChild(k3);</span>
+    }
+
+    /**
+     * Double rotate binary tree node: first rotate k1's right child
+     * with its left child; then rotate node k1 with the new right child.
+     * This is a double rotation for case 3.
+     */
+    public static AVLTreeNode doubleRotateWithRightChild( AVLTreeNode k1 )
+    {
+        // Your code here.
+<span class="nc" id="L439">        k1.setRight(rotateWithLeftChild(k1.getRight()));</span>
+<span class="nc" id="L440">        return rotateWithRightChild(k1);</span>
+    }
+
+    
+    /**
+     * Obtain a list containing the root node of the given structure i.e. tNode itself.
+     */
+    public static List&lt;AVLTreeNode&gt; levelZero(AVLTreeNode tNode) {
+<span class="nc" id="L448">        List&lt;AVLTreeNode&gt; level = new ArrayList&lt;AVLTreeNode&gt;();</span>
+<span class="nc" id="L449">        level.add(tNode);</span>
+<span class="nc" id="L450">        return level;</span>
+    }
+    
+    
+    /**
+     * Given a list of nodes, obtain the next level. 
+     * 
+     * &lt;p&gt;
+     * If the tree structure is incomplete, &lt;code&gt;AVLTreeNode.EMPTY_NODE&lt;/code&gt; is inserted as a place holder for each
+     * missing node.
+     * &lt;/p&gt;
+     */
+    public static List&lt;AVLTreeNode&gt; nextLevel(List&lt;AVLTreeNode&gt; level) {
+<span class="nc" id="L463">        List&lt;AVLTreeNode&gt; nextLevel = new ArrayList&lt;AVLTreeNode&gt;(); </span>
+        
+<span class="nc bnc" id="L465" title="All 2 branches missed.">        for (AVLTreeNode node : level) {</span>
+<span class="nc bnc" id="L466" title="All 2 branches missed.">            nextLevel.add(node.hasLeft() ? node.getLeft() : AVLTreeNode.EMPTY_NODE); </span>
+<span class="nc bnc" id="L467" title="All 2 branches missed.">            nextLevel.add(node.hasRight() ? node.getRight() : AVLTreeNode.EMPTY_NODE);</span>
+        }
+<span class="nc" id="L469">        return nextLevel;</span>
+    }
+    
+    /**
+     * Determine whether node is a place holder i.e. &lt;code&gt;node==AVLTreeNode.EMPTY_NODE&lt;/code&gt;
+     */
+    public static boolean isPlaceHolder(AVLTreeNode node) {
+<span class="nc bnc" id="L476" title="All 2 branches missed.">        return node==AVLTreeNode.EMPTY_NODE;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span>Assignment 2 (17 Mar 2015 6:32:21 PM)</div></body></html>
