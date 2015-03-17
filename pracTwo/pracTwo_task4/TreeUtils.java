@@ -96,11 +96,16 @@ public class TreeUtils {
                 node =node.getRight();
             else //found key now determine whether string is same
             {
-                for(String word: node.getGroupedLetters())
+                for(int i =0;i< node.getGroupedLetters().size();i++)
                 {
-                    if(value.equals(word))
+                    if(value.equals(node.getGroupedLetters().get(i)))
+                    {
+                        
                         return true;
+                    }
+                    
                 }
+                return false;
 
             }
 
