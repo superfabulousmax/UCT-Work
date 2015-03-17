@@ -120,14 +120,7 @@ public class AVLTreeNode {
 			return 1;
 		}
 	}
-	/**
-	 * Return height of this tree structure to calculate balance factor
-	 */
-	//code to be implemented
-	public int treeHeight()
-	{
-		return 0;
-	}
+	
 	/**
 	 * Obtain the balance factor for this node.
 	 */
