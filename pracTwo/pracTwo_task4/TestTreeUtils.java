@@ -33,6 +33,12 @@ public class TestTreeUtils{
 		}
 	}
 	@Test
+	public void testDelete()
+
+	{
+		delete(array7);
+	}
+	@Test
 	public void testFind()
 	{
 		find(array7);
@@ -99,23 +105,10 @@ public class TestTreeUtils{
 		}
 		tree.delete("a");
 		assertFalse("This should be false", tree.contains("a"));
-		assertTrue("This should be true",tree.getRoot().getValue()=="c"&tree.getRoot().getRight().getValue()=="d"&tree.getRoot().getLeft().getValue()=="b");
-		tree.delete("c");
-		assertFalse("This should be false", tree.contains("c"));
-		assertTrue("This should be true",tree.getRoot().getValue()=="d"&tree.getRoot().getLeft().getValue()=="b");
-		tree.insert("e");
-		tree.insert("f");
-		tree.insert("g");
-		tree.insert("h");
-		tree.delete("d");
-		assertFalse("This should be false", tree.contains("d"));
-		assertTrue("This should be true",tree.getRoot().getValue()=="f"&tree.getRoot().getLeft().getValue()=="e"&tree.getRoot().getLeft().getLeft().getValue()=="b"&tree.getRoot().getRight().getValue()=="g"&tree.getRoot().getRight().getRight().getValue()=="h");
-		tree.delete("b");
-		assertFalse("This should be false", tree.contains("b"));
-		assertTrue("This should be true",tree.getRoot().getValue()=="f"&tree.getRoot().getLeft().getValue()=="e"&tree.getRoot().getRight().getValue()=="g"&tree.getRoot().getRight().getRight().getValue()=="h");
-		tree.delete("h");
-		assertFalse("This should be false", tree.contains("h"));
-		assertTrue("This should be true",tree.getRoot().getValue()=="f"&tree.getRoot().getLeft().getValue()=="e"&tree.getRoot().getRight().getValue()=="g");
+		tree.delete("aa");
+		
+		assertTrue("This should be true", tree.find("a").equals("No entry found"));
+	
 		
 	}
 }
