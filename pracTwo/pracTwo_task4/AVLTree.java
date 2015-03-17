@@ -29,6 +29,16 @@ public class AVLTree {
 		return key;
 	}
 
+	/**
+	*Get root node of tree for test class
+	*/
+	public AVLTreeNode getRoot()
+	{
+		return this.root;
+	}
+
+
+
 
 	/**
 	 * Create an empty AVL tree

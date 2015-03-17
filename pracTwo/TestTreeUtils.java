@@ -75,6 +75,12 @@ public class TestTreeUtils{
 
 
 	}
+	@Test
+	public void testDelete()
+
+	{
+		delete(array6);
+	}
 	public void testContainsInteger(int [] array)
 	{
 		AVLTree tree = new AVLTree();
