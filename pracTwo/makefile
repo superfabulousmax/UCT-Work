@@ -9,5 +9,7 @@ compile: AVLTreeNode.java TreeUtils.java AVLTree.java TreeUI.java SimpleTreeWrit
 compileTest: TestTreeUtils.java
 	javac  -cp junit-4.11.jar:hamcrest-core-1.3.jar:. TestTreeUtils.java
 
+runTest: compileTest
+	java -cp junit-4.11.jar:hamcrest-core-1.3.jar:. org.junit.runner.JUnitCore TestTreeUtils
 clean:
 	@rm -f *.class
