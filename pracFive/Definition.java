@@ -2,8 +2,8 @@
 /**
  * A word definition has a word type and word description.
  * 
- * @author Stephan Jamieson
- * @version 23/4/2015
+ * @author Sinead Urisohn
+ * @version 01/05/2015
  */
 public class Definition {
     private WordType wordType;
@@ -31,4 +31,12 @@ public class Definition {
      * Return a string representation of this definition.
      */
     public String toString() { return "("+wordType+") "+description; }
+    
+    /**
+     * return if definition is equal to other definition object
+     */
+    public boolean equals(Definition other)
+    {
+    	return this.wordType==other.wordType&&this.description==other.description;
+    }
 }
