@@ -1,5 +1,9 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 /**
  * Module containing utility methods.
  * 
@@ -27,6 +31,30 @@ public class FileUtil {
      * A description consists of 1 or more characters (generally, it’s a word phrase). <br>
      */
     public static void load(Dictionary dictionary, String filename) throws FileNotFoundException, IOException { 
-        // Implement this.
+    	List <String> fileContent = new ArrayList<String>();//list of definitions to put into hash table
+    	File file= new File(filename);
+       Scanner sc = new Scanner(file).useDelimiter("\n");
+       
+       while(sc.hasNext())
+       {
+    	   String line = sc.nextLine();
+    	   fileContent.add(line);
+       }
+       sc.close();
+       //put filecontent into hash table
+       //dictionary = new LPHashtable(fileContent.size());
+       for(String fileLine: fileContent)
+       {
+    	   //split string into parts of defintion
+    	   String [] partsOfDefinition = fileLine.split(":");
+    	   String type=partsOfDefinition[0].trim();
+    	   String word= partsOfDefinition[1].trim();
+    	   String description = partsOfDefinition[2].trim();
+    	  
+    	   Definition def = new Definition(WordType.toWordType(type), description);
+    	   dictionary.insert(word, def);
+       }
+       //LPHashtable.debug_print((LPHashtable)dictionary);
+       
     }
 }
