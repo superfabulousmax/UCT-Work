@@ -7,8 +7,8 @@ import java.util.Scanner;
 /**
  * Module containing utility methods.
  * 
- * @author Stephan Jamieson
- * @version 24/4/2015
+ * @author Sinead Urisohn
+ * @version 02/05/2015
  */
 public class FileUtil {
 
@@ -46,15 +46,16 @@ public class FileUtil {
        for(String fileLine: fileContent)
        {
     	   //split string into parts of defintion
-    	   String [] partsOfDefinition = fileLine.split(":");
+    	   String [] partsOfDefinition = fileLine.split(":",3);
     	   String type=partsOfDefinition[0].trim();
     	   String word= partsOfDefinition[1].trim();
+    	   //System.out.println(word);
     	   String description = partsOfDefinition[2].trim();
     	  
     	   Definition def = new Definition(WordType.toWordType(type), description);
     	   dictionary.insert(word, def);
        }
-       //LPHashtable.debug_print((LPHashtable)dictionary);
+       QPHashtable.debug_print((QPHashtable)dictionary);
        
     }
 }

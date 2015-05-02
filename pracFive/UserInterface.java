@@ -4,7 +4,7 @@ import java.util.Scanner;
  * Simple electronic dictionary program.
  * 
  * @author Stephan Jamieson
- * @version 23/4/2015
+ * @version 02/05/2015
  */
 public class UserInterface {
     
@@ -25,9 +25,9 @@ public class UserInterface {
             case 1:
                 dictionary = new LPHashtable(7481);
                 break;
-//             case 2:
-//                 dictionary = new QPHashtable(7481);
-//                 break;
+             case 2:
+                 dictionary = new QPHashtable(7481);
+                 break;
 //             case 3:
 //                 dictionary = new SCHashtable(3739);
 //                 break;
@@ -37,6 +37,7 @@ public class UserInterface {
         }
         
         FileUtil.load(dictionary, "lexicon.txt");
+       
         
         System.out.println("Enter a word (or '#quit'):");
         String word = input.next().toLowerCase();
