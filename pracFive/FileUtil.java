@@ -55,7 +55,7 @@ public class FileUtil {
     	   Definition def = new Definition(WordType.toWordType(type), description);
     	   dictionary.insert(word, def);
        }
-       QPHashtable.debug_print((QPHashtable)dictionary);
+       SCHashtable.debug_print((SCHashtable)dictionary);
        
     }
 }
