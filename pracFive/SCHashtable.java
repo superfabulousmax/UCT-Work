@@ -11,8 +11,22 @@ public class SCHashtable implements Dictionary{
 	//create an array of linked list
 	private ChainedHashEntry [] table;
 	private int entries;
+	private int scProbeCounter;//this is a probe counter for performance testing of load performance
 
+	/*
+	 * <------------------------
+	 *Getters and setters for probe counter
+	 */
+	public int getScProbeCounter() {
+		return scProbeCounter;
+	}
 
+	public void setScProbeCounter(int scProbeCounter) {
+		this.scProbeCounter = scProbeCounter;
+	}
+	/*
+	 * ----------------------->
+	 */
 	private final static int DEFAULT_SIZE = 50;
 
 	//constructor
@@ -58,6 +72,7 @@ public class SCHashtable implements Dictionary{
 		ChainedEntry tempEntry = table[index];
 		while(tempEntry!=null)//loop through chains
 		{
+			scProbeCounter++;//increase number of probes
 			if(tempEntry.getWord().equals(word))
 				return true;
 			//get next node
@@ -74,6 +89,7 @@ public class SCHashtable implements Dictionary{
 		ChainedEntry tempEntry = table[index];
 		while(tempEntry!=null)//loop through chains
 		{
+			scProbeCounter++;//increase number of probes
 			if(tempEntry.getWord().equals(word))
 				return tempEntry.getDefinitions();
 			//get next node
@@ -118,6 +134,7 @@ public class SCHashtable implements Dictionary{
 			ChainedEntry tempEntry = table[index];
 			while(tempEntry.getNext()!=null)//loop through chains
 			{
+				scProbeCounter++;//increase number of probes
 				for(int i =0;i<tempEntry.getDefinitions().size();i++)
 				{
 					//if it is repeated definition return

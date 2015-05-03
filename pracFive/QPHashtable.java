@@ -15,8 +15,26 @@ public class QPHashtable implements Dictionary{
 	private Entry[] table;
 	private int entries;
 	
+	private int qpProbeCounter;//this is a probe counter for performance testing of load performance
+
+	/*
+	 * <------------------------
+	 *Getters and setters for probe counter
+	 */
+	public int getQpProbeCounter() {
+		return qpProbeCounter;
+	}
+
+	public void setQpProbeCounter(int qpProbeCounter) {
+		this.qpProbeCounter = qpProbeCounter;
+	}
+	/*
+	 * ----------------------->
+	 */
 	
 	public QPHashtable() { this(DEFAULT_SIZE); }
+
+
 
 	public QPHashtable(int size) { 
 		this.table = new Entry[size];
@@ -44,7 +62,7 @@ public class QPHashtable implements Dictionary{
 		//make it positive
 		if(hashVal<0)
 			hashVal+=table.length;
-
+		
 		return hashVal;
 	}
 
@@ -57,7 +75,7 @@ public class QPHashtable implements Dictionary{
 		try {
 			if(table[getWordPos(word)]!=null)
 				return table[getWordPos(word)].getWord().equals(word);
-			else return false;
+			else return false; 
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -79,6 +97,7 @@ public class QPHashtable implements Dictionary{
 		int currentPos = (word==null)?
 				0 : hashFunction(word);
 		//loop while the item is not null
+		
 		while(table[currentPos]!=null)
 		{
 			if(word==null)
@@ -89,19 +108,22 @@ public class QPHashtable implements Dictionary{
 
 			else if(table[currentPos].getWord().equals(word))
 				break;
-			//increase number of probes
-			probes+=1;
+			
 			//compute next probe
 			currentPos+=offset;
-			offset+=2;
+			offset+=2;//the difference between the difference of squares is always 2
+			//increase number of probes
+			probes+=1;
+			
 			//do mod
 			if(currentPos>=table.length)
-				currentPos=currentPos-table.length;
+				currentPos=currentPos%table.length;
 			//exception handling for number of probes
 			if(probes>table.length)
 				throw new Exception("Probing has failed (i>M)");
 				
 		}
+		qpProbeCounter+=probes;//increase number of probes for performance testing
 		return currentPos;
 	}
 
@@ -134,7 +156,7 @@ public class QPHashtable implements Dictionary{
      */
 	public void insert(String word, Definition definition){
 		//find position for word
-		int currentPos=-1;
+		int currentPos=0;
 		try {
 			currentPos = getWordPos(word);
 		} catch (Exception e) {
@@ -172,8 +194,8 @@ public class QPHashtable implements Dictionary{
 		
 		//ensure load factor less than 0.5 and that table size is prime
 		//for best performance and minimal collisions
-		if(loadFactor()>=0.5)
-			rehash();
+//		if(loadFactor()>=0.5)
+//			rehash();
 	}
 
 

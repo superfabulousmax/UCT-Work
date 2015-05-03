@@ -10,7 +10,7 @@ public class UserInterface {
     
     private UserInterface() {}
     
-    public static void main(String[] args) throws java.io.FileNotFoundException, java.io.IOException {
+    public static void main(String[] args) throws java.io.FileNotFoundException, java.io.IOException,Exception {
         Scanner input = new Scanner(System.in);
         
         System.out.println("Choose a hash table implementation:");

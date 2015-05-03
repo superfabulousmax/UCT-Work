@@ -12,8 +12,26 @@ public class LPHashtable implements Dictionary
  
     private Entry[] table;
     private int entries;
- 
-    public LPHashtable() { this(DEFAULT_SIZE); }
+    
+    private int lpProbeCounter;//this is a probe counter for performance testing of load performance
+
+	/*
+	 * <------------------------
+	 *Getters and setters for probe counter
+	 */
+   
+    public int getLpProbeCounter() {
+		return lpProbeCounter;
+	}
+
+	public void setLpProbeCounter(int lpProbeCounter) {
+		this.lpProbeCounter = lpProbeCounter;
+	}
+	/*
+	 * ----------------------->
+	 */
+
+	public LPHashtable() { this(DEFAULT_SIZE); }
     
     public LPHashtable(int size) { 
         this.table = new Entry[size];
@@ -59,19 +77,25 @@ public class LPHashtable implements Dictionary
     			return true;
     	//if it does not match then increase index and increment until found or not found
     	pos++;
+    	lpProbeCounter+=1;//increase probe counter
     	int i =pos;
     	//in case initial increment requires a wrap
-    	if(i==table.length-1)
+    	if(i==table.length)
 			i=0;
+
     	for(;i!=tempIndex;i++)
     	{
     		
     		tempEntry = table[i];
     		if(tempEntry!=null)
+    		{
         		if(tempEntry.isEntryFor(word))
         			return true;
+    		}
+        	else return false;
     		if(i==table.length-1)
     			i=-1;//since loop will increment it to 0
+    		lpProbeCounter++;//increase probe counter
     	}
     	return false;
     }
@@ -96,6 +120,7 @@ public class LPHashtable implements Dictionary
      *   Inserts the given word and definition.
      */
     public void insert(String word, Definition definition) {      
+    	
     	int indexToInsert =findPos(word);
     	
         if(!containsWord(word))
@@ -144,6 +169,7 @@ public class LPHashtable implements Dictionary
     			index=0;
     		
     		index+=1;
+    		lpProbeCounter++;//increase probe counter
     	}
     	return index;
     }
@@ -157,12 +183,14 @@ public class LPHashtable implements Dictionary
     public int findWordPos(String word)
     {
     	int index= hashFunction(word);
-    	while(!table[index].getWord().equals(word))
+    	
+    	while(table[index]!=null&&!table[index].getWord().equals(word))
     	{
     		if(index>=table.length-1)//wrap around once reach end of table
     			index=0;
     		
     		index+=1;
+    		lpProbeCounter++;//increase probe counter
     	}
     	
     	return index;

@@ -30,7 +30,7 @@ public class FileUtil {
      * A word consists of a sequence of one or more letters. <br>
      * A description consists of 1 or more characters (generally, it’s a word phrase). <br>
      */
-    public static void load(Dictionary dictionary, String filename) throws FileNotFoundException, IOException { 
+    public static void load(Dictionary dictionary, String filename) throws FileNotFoundException, IOException ,Exception{ 
     	List <String> fileContent = new ArrayList<String>();//list of definitions to put into hash table
     	File file= new File(filename);
        Scanner sc = new Scanner(file).useDelimiter("\n");
@@ -49,13 +49,15 @@ public class FileUtil {
     	   String [] partsOfDefinition = fileLine.split(":",3);
     	   String type=partsOfDefinition[0].trim();
     	   String word= partsOfDefinition[1].trim();
-    	   //System.out.println(word);
+    	   
     	   String description = partsOfDefinition[2].trim();
     	  
     	   Definition def = new Definition(WordType.toWordType(type), description);
     	   dictionary.insert(word, def);
        }
-       SCHashtable.debug_print((SCHashtable)dictionary);
        
+     // System.out.println(dictionary.size());
+      //SCHashtable.debug_print((SCHashtable)dictionary);
+       //LPHashtable.debug_print((LPHashtable)dictionary);
     }
 }
