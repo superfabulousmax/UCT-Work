@@ -72,13 +72,15 @@ public class QPHashtable implements Dictionary{
 	 *  sees if the word has valid position in table
 	 */
 	public boolean containsWord(String word) {
+		
 		try {
-			if(table[getWordPos(word)]!=null)
-				return table[getWordPos(word)].getWord().equals(word);
+			int index=getWordPos(word);
+			if(table[index]!=null)
+				return table[index].getWord().equals(word);
 			else return false; 
 		} catch (Exception e) {
 			
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		return false;
 	}
@@ -160,7 +162,7 @@ public class QPHashtable implements Dictionary{
 		try {
 			currentPos = getWordPos(word);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		//if it is new entry add
 		if(!containsWord(word))

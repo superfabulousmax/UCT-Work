@@ -35,9 +35,9 @@ public class HashTableLoadPerformance {
 		int probesQP=dictionary2.getQpProbeCounter();
 		int probesSC=dictionary3.getScProbeCounter();
 
-		double percentageDiffQPAndLP=((probesQP-probesLP)/probesQP)*100;
-		double percentageDiffSCAndLP=((probesSC-probesLP)/probesSC)*100;
-		double percentageDiffSCAndQP=((probesSC-probesQP)/probesSC)*100;
+		double percentageDiffQPAndLP=((double)(probesQP-probesLP)/probesQP)*100.0;
+		double percentageDiffSCAndLP=((double)(probesSC-probesLP)/probesSC)*100.0;
+		double percentageDiffSCAndQP=((double)(probesSC-probesQP)/probesSC)*100.0;
 
 		//number of probes in each case
 		System.out.println("\nLoad factor 1.0\nNumber of probes in each case:\n");
@@ -69,9 +69,9 @@ public class HashTableLoadPerformance {
 		probesQP=dictionary2.getQpProbeCounter();
 		probesSC=dictionary3.getScProbeCounter();
 
-		percentageDiffQPAndLP=((probesQP-probesLP)/probesQP)*100;
-		percentageDiffSCAndLP=((probesSC-probesLP)/probesSC)*100;
-		percentageDiffSCAndQP=((probesSC-probesQP)/probesSC)*100;
+		 percentageDiffQPAndLP=((double)(probesQP-probesLP)/probesQP)*100.0;
+		 percentageDiffSCAndLP=((double)(probesSC-probesLP)/probesSC)*100.0;
+		 percentageDiffSCAndQP=((double)(probesSC-probesQP)/probesSC)*100.0;
 
 
 		//number of probes in each case
@@ -107,10 +107,10 @@ public class HashTableLoadPerformance {
 		probesQP=dictionary2.getQpProbeCounter();
 		probesSC=dictionary3.getScProbeCounter();
 
-		percentageDiffQPAndLP=((probesQP-probesLP)/probesQP)*100;
-		percentageDiffSCAndLP=((probesSC-probesLP)/probesSC)*100;
-		percentageDiffSCAndQP=((probesSC-probesQP)/probesSC)*100;		
-
+		 percentageDiffQPAndLP=((double)(probesQP-probesLP)/probesQP)*100.0;
+		 percentageDiffSCAndLP=((double)(probesSC-probesLP)/probesSC)*100.0;
+		 percentageDiffSCAndQP=((double)(probesSC-probesQP)/probesSC)*100.0;
+		 
 		//number of probes in each case
 		System.out.println("\nLoad factor 0.5\nNumber of probes in each case:\n");
 		System.out.printf("%40s %40s %40s \n","Linear Probing probe number","Quadratic Probing probe number","Sequential Chaining probe number");

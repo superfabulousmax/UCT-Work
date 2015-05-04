@@ -13,7 +13,8 @@ public class LPHashtable implements Dictionary
     private Entry[] table;
     private int entries;
     
-    private int lpProbeCounter;//this is a probe counter for performance testing of load performance
+    private int lpProbeCounter;//this is a probe counter for performance testing of load and search performance
+  
 
 	/*
 	 * <------------------------
@@ -78,6 +79,7 @@ public class LPHashtable implements Dictionary
     	//if it does not match then increase index and increment until found or not found
     	pos++;
     	lpProbeCounter+=1;//increase probe counter
+    	
     	int i =pos;
     	//in case initial increment requires a wrap
     	if(i==table.length)
@@ -96,6 +98,7 @@ public class LPHashtable implements Dictionary
     		if(i==table.length-1)
     			i=-1;//since loop will increment it to 0
     		lpProbeCounter++;//increase probe counter
+    		
     	}
     	return false;
     }
