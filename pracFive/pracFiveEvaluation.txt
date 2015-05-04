@@ -1,0 +1,108 @@
+Description of how my measurements were obtained:
+
+I created two performance testing programs HashTableLoadPerformance and HashTableSearchPerformance
+which manually created hash tables of required load factors of: 1.0, 0.75 and 0.5
+
+I instrumented the LPHashtable, QPHashtable, SCHashtable programs with probe counter variables in order to
+determine probe numbers for each implementation
+
+HashTableLoadPerformance counts the number of probes during table loading/insertion
+HashTableSearchPerformance performs 100 trials (a variable which can be changed if one would like to observe a different number of trials)
+for searching for 100 words in each table implementation and gathers the average number of probes for the 100 trials for each implementation.
+
+*-------------Some Sample data--------------*
+
+3.2.1 Hash table load performance:
+
+		Load factor 1.0
+		Number of probes in each case:
+
+			     Linear Probing probe number           Quadratic Probing probe number         Sequential Chaining probe number 
+				                  531637                                    57936                                     3965 
+		Percentage difference between: 
+
+		      Quadratic Probing & Linear Probing     Sequential Chaining & Linear Probing  Sequential chaining & Quadratic Probing 
+				             -817.628072                            -13308.247163                             -1361.185372 
+
+		Load factor 0.75
+		Number of probes in each case:
+
+			     Linear Probing probe number           Quadratic Probing probe number         Sequential Chaining probe number 
+				                   24165                                     9608                                     3347 
+		Percentage difference between: 
+
+		      Quadratic Probing & Linear Probing     Sequential Chaining & Linear Probing  Sequential chaining & Quadratic Probing 
+				             -151.509159                              -621.989842                              -187.063042 
+
+		Load factor 0.5
+		Number of probes in each case:
+
+			     Linear Probing probe number           Quadratic Probing probe number         Sequential Chaining probe number 
+				                   12036                                     4622                                     2677 
+		Percentage difference between: 
+
+		      Quadratic Probing & Linear Probing     Sequential Chaining & Linear Probing  Sequential chaining & Quadratic Probing 
+				             -160.406750                              -349.607770                               -72.655958 
+
+3.2.2 Hash table search performance:
+
+
+		Load factor 1.0
+		 Average number of probes over 100 trials:
+
+			     Linear Probing probe number           Quadratic Probing probe number         Sequential Chaining probe number 
+				          3934111.000000                            616034.000000                              6934.000000 
+		Percentage difference between: 
+
+		      Quadratic Probing & Linear Probing     Sequential Chaining & Linear Probing  Sequential chaining & Quadratic Probing 
+				             -538.619135                            -56636.530141                             -8784.251514 
+
+		Load factor 0.75
+		 Average number of probes over 100 trials:
+
+			     Linear Probing probe number           Quadratic Probing probe number         Sequential Chaining probe number 
+				            46807.000000                             23061.000000                             18869.000000 
+		Percentage difference between: 
+
+		      Quadratic Probing & Linear Probing     Sequential Chaining & Linear Probing  Sequential chaining & Quadratic Probing 
+				             -102.970383                              -148.062960                               -22.216334 
+
+		Load factor 0.5
+		 Average number of probes over 100 trials:
+
+			     Linear Probing probe number           Quadratic Probing probe number         Sequential Chaining probe number 
+				            24559.000000                             15012.000000                             27676.000000 
+		Percentage difference between: 
+
+		      Quadratic Probing & Linear Probing     Sequential Chaining & Linear Probing  Sequential chaining & Quadratic Probing 
+				              -63.595790                                11.262466                                45.758058 
+
+
+3.3 Evaluation
+
+For loading into a table Sequential Chaining is superior owing to the fact that it involves just one hash and a single insert into a head of linked list;
+which are both constant time operations. Whereas Quadratic probing and linear probing have to keep stepping through the table until null space is found.
+
+For searching for a value in the table Sequential Chaining performs the worst for relatively low load factors because of the linked list searching.
+Whereas quadratic probing and linear probing perform better searches for lower load factors. Quadratic probing performs best searches when load factor is lower owing to the nature of quadratic
+stepping through table for collisions and table emptiness. 
+
+If space is not an issue then:
+the fastest insert is Sequential Chaining and the fastest search is quadratic probing. 
+
+The technique which generally performs the best is Sequential Chaining because:
+1. You get nearly constant time loading regardless of the load factor. 
+2. If you know your table size using a load factor of 1 performs best searching i.e. if load factor is high; Sequential Chaining is extremely performant in searching
+compared to quadractic probing and linear probing.
+3. Even if load factor is low, Sequential Chaining is roughly as performant as Linear probing and slightly less perfomant that quadratic probing
+4. One can use a good hash function to ensure short linked lists for each slot in hash table
+
+Sequential Chaining offers the best combination of speed and efficient storage because:
+1. You can allocate memory as you need it by adding another chain to the linked list as opposed to dynamically resizing your array and using a new memory chunk.
+2. If you use a good hash function to ensure short linked lists for each slot in hash table, this avoids lengthy linked list iterations and allows you to have 
+relatively fast searches, So if each slot has a linked list size of less than or equal to 3 this is only O(3) time complexity.
+3. Quadratic probing would require dynamic resizing of array when load factor > than 0.5 and this is not speed efficient nor memory friendly i.e.
+large number of expensive IO operations
+4. Linear probing is prone to primary clustering and therefore the speed is slow on average for searching tables with higher load factors.
+Dynamic resizing of array would also be required which is again expensive in terms of speed and storage.
+
