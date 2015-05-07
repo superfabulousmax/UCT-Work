@@ -25,7 +25,18 @@ default: classes
 
 classes: $(CLASSES:.java=.class)
 
-testperformance:
+#complie test
+compileTest: TestHashTables.java
+	javac  -cp junit-4.11.jar:hamcrest-core-1.3.jar:. TestHashTables.java
+
+runTest: compileTest
+	java -cp junit-4.11.jar:hamcrest-core-1.3.jar:. org.junit.runner.JUnitCore TestHashTables
+#run program
+compileInterface: UserInterface.java
+	 javac UserInterface.java
+
+run: compileInterface
+	java UserInterface
 clean:
 	$(RM) *.class
 
