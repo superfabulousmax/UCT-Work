@@ -47,7 +47,8 @@ public class Main {
 			}
 			
 			textFileWithGraph.close();
-			System.out.println(g.getMinCostPath("A"));
+			System.out.println("BRUTE FORCE NAIVE OPTIMISED RESULT:\n"+g.getMinCostPath("A"));
+			System.out.println("NEAREST NEIGHBOUR HEURISTIC RESULT:\n"+g.getMinPathWithNearestNeighbourHeuristic("A"));
 		}
 		catch( IOException e )
 		{ 

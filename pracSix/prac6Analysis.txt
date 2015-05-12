@@ -1,0 +1,47 @@
+/ ___|_ _| \ | | ____|  / \  |  _ \( ) ___| 
+\___ \| ||  \| |  _|   / _ \ | | | |/\___ \ 
+ ___) | || |\  | |___ / ___ \| |_| |  ___) |
+|____/___|_| \_|_____/_/   \_\____/  |____/ 
+                                            
+    _    _   _    _    _  __   ______ ___ ____  
+   / \  | \ | |  / \  | | \ \ / / ___|_ _/ ___|    
+  / _ \ |  \| | / _ \ | |  \ V /\___ \| |\___ \    
+ / ___ \| |\  |/ ___ \| |___| |  ___) | | ___) |   
+/_/   \_\_| \_/_/   \_\_____|_| |____/___|____/    Give me good marks deeeesu
+
+My proposed more efficient solution was the nearest neighbour algorithm whereby one always travels from the 
+current node to the nearest(i.e. cheapest) unvisited node. This is a heuristic algorithm that is not always guaranteed
+to give you the minimum path, but it is less expensive than brute force with O(N^2) time complexity.
+
+For comparison, in the brute force algorithm, we calculate every permuatation of possible path traversals. 
+This requires (N-1)! paths to be calculated, hence the performance is O(N!) which is quite terrible.
+
+An example where the nearest neighbour gives an incorrect solution is when the last node visited has a 
+high-cost edge connecting it to the starting vertex. The brute force method will always give the correct 
+answer in comparison, as it would list all possible solutions and simply choose the minimal one.
+
+Consider the following:
+
+		If the Graph1.txt has data:
+		A B 10
+		A D 20
+		A C 15000
+		B C 35
+		B D 25
+		D C 30
+	
+		where C->A is the last edge to traverse, the nearest neighbour algorithm computes:
+
+		BRUTE FORCE NAIVE OPTIMISED RESULT:
+		95
+		NEAREST NEIGHBOUR HEURISTIC RESULT:
+		15065
+
+		Which is clearly wrong!
+
+
+Another considered, but unimplemented in my code, heuristic algorithm that may give a decent solution with lower time complexity and faster,
+less expensive computations is the greedy algorithm. In this, the edges are sorted in ascending order and
+chosen from smallest to biggest such that the hamiltonion cycle property of the solution is not violated.
+This algorithm has complexity O(n2log2(n)).
+

@@ -47,6 +47,7 @@ public class Graph {
 	}
 	
 	
+	
 
 	/**
 	 * a.Consider city A as the starting point
@@ -60,11 +61,12 @@ public class Graph {
 	public int getMinCostPath(String startName) 
 	{
 		Vertex v = vertexMap.get(startName);//get vertex associated with this name
-		List<Edge> adjEdjes =v.getAdjacent();//get the adjacency list for this vertex
 		if(v==null)//exception
 		{
 			throw new NoSuchElementException("Vertex is null");
 		}
+		List<Edge> adjEdjes =v.getAdjacent();//get the adjacency list for this vertex
+		
 		//loop through adjEdjes list and get Strings of names of vertices on edges
 		//add names to String list
 		List<String> adjVertexNames = new ArrayList<String>();
@@ -121,6 +123,7 @@ public class Graph {
 	 */
 	public int getCostOfThisEdge(String fromVertex,String toVertex)
 	{
+		
 		Vertex currentVertex = vertexMap.get(fromVertex);
 		List<Edge> adjEdgesForThisVertex = currentVertex.getAdjacent();
 		for(int k=0;k<adjEdgesForThisVertex.size();k++ )
@@ -171,4 +174,84 @@ public class Graph {
 		return perm;
 
 	}
+	
+	/**
+	 * Nearest Neighbour algorithm
+	 * 1. Select a random city.
+	 * 2. Find the nearest unvisited city and go there.
+	 * 3. Are there any unvisitied cities left? If yes, repeat step 2.
+	 * 4. Return to the first city.
+	 * @param start name of the vertex 
+	 * @return min cost path
+	 * @throws Exception NoSuchElementException
+	 */
+	public int getMinPathWithNearestNeighbourHeuristic(String startName)
+	{
+		Vertex v = vertexMap.get(startName);//get vertex associated with this name
+		if(v==null)//exception
+		{
+			throw new NoSuchElementException("Vertex is null");
+		}
+		List<Edge> adjEdjes =v.getAdjacent();//get the adjacency list for this vertex
+		
+		//loop through adjEdjes list and get Strings of names of vertices on edges
+		//add names to String list
+		List<String> pathVertexNames = new ArrayList<String>();
+		
+		for(Edge edge: adjEdjes)
+		{
+			pathVertexNames.add(edge.getDest().getName());	
+		}
+	
+		int sumOfPath=0;
+		//while there are unvisited nodes
+		
+		String startNode=startName;
+		String endNode =getNextCheapestEdge(startName,pathVertexNames);
+		while(pathVertexNames.size()>0)
+		{
+			
+			sumOfPath+=getCostOfThisEdge(startNode, endNode);
+			startNode=endNode;
+			pathVertexNames.remove(startNode);
+			endNode=getNextCheapestEdge(startNode,pathVertexNames);
+			if(pathVertexNames.size()==0)
+			{
+				endNode=startNode;
+			}
+			
+		}
+		//return to first city
+		sumOfPath+=getCostOfThisEdge(endNode, startName);
+		return sumOfPath;
+	}
+	
+	/**
+	 * 
+	 * @param startName
+	 * @param pathVertexNames
+	 * @return name of vertex with cheapest edge
+	 */
+	public String getNextCheapestEdge(String startName, List<String> pathVertexNames)
+	{
+		Vertex v = vertexMap.get(startName);//get vertex associated with this name
+		if(v==null)//exception
+		{
+			throw new NoSuchElementException("Vertex is null");
+		}
+		List<Edge> adjEdjes =v.getAdjacent();//get the adjacency list for this vertex
+		int min = Integer.MAX_VALUE;
+		String nameOfMinVertex="";
+		for(Edge edge: adjEdjes)
+		{
+				if(edge.getCost()<min&pathVertexNames.contains(edge.getDest().getName()))
+				{
+					min=edge.getCost();
+					nameOfMinVertex=edge.getDest().getName();
+				}
+		}
+		return nameOfMinVertex;
+	}
+	
+	
 }
