@@ -11,11 +11,11 @@ public class Vertex {
 
 	//fields
 	private String name;//name of the vertex
-	private List<Edge> adjacent;//adjacent verticess
+	private List<Edge> adjacent;//adjacent vertices
 	private Vertex prev;//previous vertex on path
-	private int scratch;
+	private int scratch;//to see if this vertex has been visited
 	
-	//constructor
+	//constructor 
 
 	public Vertex(String name) {
 		this.name = name;

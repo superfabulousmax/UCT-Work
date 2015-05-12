@@ -7,9 +7,9 @@
 public class Edge {
 	
 	private Vertex dest;//second vertex in the edge
-	private double cost;//cost of traversing edge
+	private int cost;//cost of traversing edge
 	
-	public Edge(Vertex dest, double cost) {
+	public Edge(Vertex dest, int cost) {
 		this.dest = dest;
 		this.cost = cost;
 	}
@@ -20,10 +20,10 @@ public class Edge {
 	public void setDest(Vertex dest) {
 		this.dest = dest;
 	}
-	public double getCost() {
+	public int getCost() {
 		return cost;
 	}
-	public void setCost(double cost) {
+	public void setCost(int cost) {
 		this.cost = cost;
 	}
 	
