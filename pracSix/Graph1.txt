@@ -1,6 +1,6 @@
 A B 10
 A D 20
-A C 15000
+A C 15
 B C 35
 B D 25
 D C 30
